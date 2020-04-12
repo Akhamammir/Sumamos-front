@@ -8,6 +8,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { SelectButton } from 'primereact/selectbutton';
 import { Calendar } from 'primereact/calendar';
 import { OverlayPanel } from 'primereact/overlaypanel';
+import {RadioButton} from 'primereact/radiobutton';
 import { Grommet, Grid, Box, Heading, Text } from 'grommet';
 import { email } from './../Models/Regex'
 import './stepper.css';
@@ -41,9 +42,10 @@ class Stepper extends React.Component {
         gender:'', date:'',
         town:'', email:'',
         cp:'', phone:'',
+        house: null,
         visible: false,
         validMail:false,
-        step: 0,
+        step: 1,
     }
     title = "INGRESA TUS DATOS PERSONALES"
     validate = (ev) => {
@@ -333,7 +335,195 @@ class Stepper extends React.Component {
     }
     step1 =() =>{
         return(
-            <div>Step 2</div>
+            <Grid
+                rows={['70px', '200px', '70px']}
+                columns={['250px', '250px', 'small', '250px', '250px']}
+                gap={{ column: "small", row: "medium" }}
+                areas={[
+                    { name: 'one', start: [0, 0], end: [0, 0] },
+                    { name: 'two', start: [1, 0], end: [1, 0] },
+                    { name: 'three', start: [3, 0], end: [3, 0] },
+                    { name: 'four', start: [4, 0], end: [4, 0] },
+                    { name: 'five', start: [0, 1], end: [0, 1] },
+                ]}
+            >
+                <Box gridArea="one" >
+                    <Text>Municipio</Text>
+                    <Dropdown
+                        value={this.state.city}
+                        options={citySelectItems}
+                        onChange={(e) => { this.setState({ city: e.value }) }}
+                        placeholder="Selecciona Munic."
+                    />
+                </Box>
+                <Box gridArea="two" >
+                    <Text>Calle</Text>
+                    <div className="p-inputgroup">
+                        <InputText
+                            placeholder="Vote"
+                            style={{ width: '100%' }}
+                            value={this.state.street}
+                            onChange={
+                                (e) => this.setState({
+                                     street: e.target.value
+                                    })
+                                }
+                        />
+                        <Button
+                            icon={
+                                this.state.street.length > 6 ?
+                                "pi pi-check" :
+                                "pi pi-minus" 
+                            }
+                            className="p-button-secondary"
+                            disabled="disabled"
+                        />
+                    </div>
+                </Box>
+                <Box gridArea="three" >
+                    <Text>C. P.</Text>
+                    <div className="p-inputgroup">
+                        <InputText
+                            placeholder="Vote"
+                            style={{ width: '100%' }}
+                            keyfilter="pint"
+                            value={this.state.cp}
+                            onChange={
+                                (e) => this.setState({
+                                    cp: e.target.value
+                                    })
+                                }
+                        />
+                        <Button
+                            icon={
+                                this.state.cp.length > 4 ?
+                                "pi pi-check" :
+                                "pi pi-minus" 
+                            }
+                            className="p-button-secondary"
+                            disabled="disabled"
+                        />
+                    </div>
+                </Box>
+                <Box gridArea="four" >
+                    <Text>Municipio</Text>
+                    <Dropdown
+                        value={this.state.city}
+                        options={citySelectItems}
+                        onChange={(e) => { this.setState({ city: e.value }) }}
+                        placeholder="Selecciona Munic."
+                    />
+                </Box>
+                <Box gridArea="five" >
+                    <Text>La casa donde vives es:</Text>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb1"
+                            value="val1"
+                            name="house"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    house: e.value
+                                    })
+                                }
+                            checked={
+                                this.state.house === 'val1'
+                            }
+                        />
+                        <label
+                            htmlFor="rb1"
+                            className="p-radiobutton-label"
+                        >
+                            Propia
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb2"
+                            value="val2"
+                            name="house"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    house: e.value
+                                    })
+                                }
+                            checked={
+                                this.state.house === 'val2'
+                            }
+                        />
+                        <label
+                            htmlFor="rb2"
+                            className="p-radiobutton-label"
+                        >
+                            Rentada
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb3"
+                            value="val3"
+                            name="house"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    house: e.value
+                                    })
+                                }
+                            checked={
+                                this.state.house === 'val3'
+                            }
+                        />
+                        <label
+                            htmlFor="rb3"
+                            className="p-radiobutton-label"
+                        >
+                            Prestada
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb4"
+                            value="val4"
+                            name="house"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    house: e.value
+                                    })
+                                }
+                            checked={
+                                this.state.house === 'val4'
+                            }
+                        />
+                        <label
+                            htmlFor="rb4"
+                            className="p-radiobutton-label"
+                        >
+                            Otro
+                        </label>
+                    </div>
+                    <br/>
+                    <div className="p-col-12">
+                        <InputText
+                            placeholder={
+                                this.state.house != 'val4' ?
+                                '-' :
+                                'Especifique'
+                            }
+                            style={{ width: '100%' }}
+                            value={this.state.street}
+                            disabled = {this.state.house != 'val4'}
+                            onChange={
+                                (e) => this.setState({
+                                     street: e.target.value
+                                    })
+                                }
+                        />
+                    </div>
+                </Box>
+            </Grid>
         );
     }
     step2 =() =>{

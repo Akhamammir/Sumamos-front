@@ -219,3 +219,18 @@ body{
     border-top-color: rgba(0, 0, 0, 0)!important;
     top:35%!important;
   }
+  .p-radiobutton .p-radiobutton-box.p-highlight{
+    background-color: #EDC500!important;
+    border-color: #EDC500!important;
+  }
+  .p-radiobutton .p-radiobutton-box.p-highlight .p-radiobutton-icon{
+    background-color: #4C85F0!important;
+  }
+  .p-radiobutton-label{
+    font-family: 'Quicksand', sans-serif!important;
+    font-weight: 300!important;
+    font-size: x-large;
+  }
+  .p-col-12{
+    align-self: flex-start!important;
+  }
