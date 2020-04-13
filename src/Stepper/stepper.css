@@ -234,3 +234,31 @@ body{
   .p-col-12{
     align-self: flex-start!important;
   }
+  .unselect{
+    font-family: 'Quicksand', sans-serif!important;
+    background-color: #EDC500!important;
+    color:#4C85F0!important;
+  }
+  .unselectbtn.p-button-raised{
+    margin-top: 20px!important;
+    background-color:#4C85F0!important;
+    color:#E8E8E8!important;
+    border-color: #4C85F0!important;
+    border-radius: 10px!important;
+    font-family: 'Quicksand', sans-serif!important;
+    font-size: x-large!important;
+  }
+  .select{
+    font-family: 'Quicksand', sans-serif!important;
+    background-color: #4C85F0!important;
+    color:#E8E8E8!important;
+  }
+  .selectbtn.p-button-raised{
+    margin-top: 20px!important;
+    background-color:#00C781!important;
+    color:#E8E8E8!important;
+    border-color: #00C781!important;
+    border-radius: 10px!important;
+    font-family: 'Quicksand', sans-serif!important;
+    font-size: x-large!important;
+  }
