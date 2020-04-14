@@ -872,31 +872,6 @@ class Stepper extends React.Component {
                     </Card>
                 </Box>
 
-                <Box gridArea="six" >
-                    <Card
-                        title="Title"
-                        className={
-                            this.state.selectplan === 2 ?
-                            "select" :
-                            "unselect"
-                        }
-                    >
-                        {ipsumShort}
-                        <Button
-                            label="Seleccionar"
-                            className={
-                                this.state.selectplan === 2 ?
-                                "selectbtn p-button-raised" :
-                                "unselectbtn p-button-raised"
-                            }
-                            onClick={(e) =>
-                                this.setState({
-                                    selectplan: 2
-                                })}
-                        />
-                    </Card>
-                </Box>
-
                 <Box gridArea="seven" >
                     <Card
                         title="Title"
