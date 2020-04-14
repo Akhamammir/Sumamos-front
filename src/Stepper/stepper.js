@@ -71,11 +71,7 @@ class Stepper extends React.Component {
         visible: false,
         validMail: false,
         selectplan: 2,
-<<<<<<< HEAD
         step: 3,
-=======
-        step: 1,
->>>>>>> d2aa1c0c2590f1159cd562b4830aa67b3edb0ba3
     }
     title = "INGRESA TUS DATOS PERSONALES"
     validate = (ev) => {
@@ -852,51 +848,17 @@ class Stepper extends React.Component {
             >
                 <Box gridArea="five" >
                     <Card
-<<<<<<< HEAD
                         title="Title"
                         className={
                             this.state.selectplan == 1 ?
                                 "select" :
                                 "unselect"
-=======
-                        title="Title"
-                        className={
-                            this.state.selectplan === 1 ?
-                            "select" :
-                            "unselect"
                         }
                     >
                         {ipsumShort}
                         <Button
                             label="Seleccionar"
                             className={
-                                this.state.selectplan === 1 ?
-                                "selectbtn p-button-raised" :
-                                "unselectbtn p-button-raised"
-                            }
-                            onClick={(e) =>
-                                this.setState({
-                                    selectplan: 1
-                                })}
-                        />
-                    </Card>
-                </Box>
-
-                <Box gridArea="six" >
-                    <Card
-                        title="Title"
-                        className={
-                            this.state.selectplan === 2 ?
-                            "select" :
-                            "unselect"
->>>>>>> d2aa1c0c2590f1159cd562b4830aa67b3edb0ba3
-                        }
-                    >
-                        {ipsumShort}
-                        <Button
-                            label="Seleccionar"
-                            className={
-<<<<<<< HEAD
                                 this.state.selectplan == 1 ?
                                     "selectbtn p-button-raised" :
                                     "unselectbtn p-button-raised"
@@ -904,15 +866,6 @@ class Stepper extends React.Component {
                             onClick={(e) =>
                                 this.setState({
                                     selectplan: 1
-=======
-                                this.state.selectplan === 2 ?
-                                "selectbtn p-button-raised" :
-                                "unselectbtn p-button-raised"
-                            }
-                            onClick={(e) =>
-                                this.setState({
-                                    selectplan: 2
->>>>>>> d2aa1c0c2590f1159cd562b4830aa67b3edb0ba3
                                 })}
                         />
                     </Card>
