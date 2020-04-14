@@ -71,7 +71,7 @@ class Stepper extends React.Component {
         visible: false,
         validMail: false,
         selectplan: 2,
-        step: 3,
+        step: 0,
     }
     title = "INGRESA TUS DATOS PERSONALES"
     validate = (ev) => {
@@ -91,7 +91,7 @@ class Stepper extends React.Component {
         return (
             <Grid
                 rows={['70px', '70px', '70px', '70px']}
-                columns={['200px', '200px', 'xsmall', '200px', '200px']}
+                columns={['200px', '200px', 'auto', '200px', '200px']}
                 gap={{ column: "small", row: "medium" }}
                 areas={[
                     { name: 'one', start: [0, 0], end: [0, 0] },
@@ -832,17 +832,18 @@ class Stepper extends React.Component {
         return (
             <Grid
                 rows={['70px', '200px', '70px']}
-                columns={['250px', '250px', '250px', '250px']}
+                columns={['auto','250px', '250px', '250px', '250px','auto']}
                 gap={{ column: "small", row: "medium" }}
                 areas={[
-                    { name: 'one', start: [0, 0], end: [0, 0] },
-                    { name: 'two', start: [1, 0], end: [1, 0] },
-                    { name: 'three', start: [2, 0], end: [2, 0] },
-                    { name: 'four', start: [3, 0], end: [3, 0] },
-                    { name: 'five', start: [0, 1], end: [0, 1] },
+                    // { name: 'one', start: [0, 0], end: [0, 0] },
+                    // { name: 'two', start: [1, 0], end: [1, 0] },
+                    // { name: 'three', start: [2, 0], end: [2, 0] },
+                    // { name: 'four', start: [3, 0], end: [3, 0] },
+                    { name: 'five', start: [4, 1], end: [4, 1] },
                     { name: 'six', start: [1, 1], end: [1, 1] },
                     { name: 'seven', start: [2, 1], end: [2, 1] },
                     { name: 'eight', start: [3, 1], end: [3, 1] },
+                    
 
                 ]}
             >
@@ -850,7 +851,7 @@ class Stepper extends React.Component {
                     <Card
                         title="Title"
                         className={
-                            this.state.selectplan == 1 ?
+                            this.state.selectplan === 1 ?
                                 "select" :
                                 "unselect"
                         }
@@ -859,7 +860,7 @@ class Stepper extends React.Component {
                         <Button
                             label="Seleccionar"
                             className={
-                                this.state.selectplan == 1 ?
+                                this.state.selectplan === 1 ?
                                     "selectbtn p-button-raised" :
                                     "unselectbtn p-button-raised"
                             }
@@ -967,7 +968,7 @@ class Stepper extends React.Component {
                 <header className="App-header">
                     <Grid
                         rows={['xxsmall', 'xsmall', 'xsmall', '700px']}
-                        columns={['7%', '3%', '70%', '3%', '10%']}
+                        columns={['10%', '3%', '1fr', '3%', '10%']}
                         gap="small"
                         areas={[
                             { name: 'header', start: [0, 0], end: [4, 0] },
