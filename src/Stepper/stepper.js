@@ -29,6 +29,21 @@ const citySelectItems = [
     { label: 'Istanbul', value: 'IST' },
     { label: 'Paris', value: 'PRS' }
 ];
+
+const maritalStatusSelectItems = [
+    { label: 'Soltero(a)', value: 'single' },
+    { label: 'Casado(a)', value: 'married' },
+    { label: 'Divorsiado(a)', value: 'divorced' },
+    { label: 'Viudo(a)', value: 'widow' },
+];
+const currentSituacionSelectItems = [
+    { label: 'New York', value: 'NY' },
+    { label: 'Rome', value: 'RM' },
+    { label: 'London', value: 'LDN' },
+    { label: 'Istanbul', value: 'IST' },
+    { label: 'Paris', value: 'PRS' }
+];
+
 const genders = [
     { label: 'Mujer', value: 'F' },
     { label: 'Hombre', value: 'M' },
@@ -46,11 +61,21 @@ class Stepper extends React.Component {
         gender: '', date: '',
         town: '', email: '',
         cp: '', phone: '',
-        house: null,
+        //Step 1 Values
+        maritalStatus:'',ocupation:'',
+        familyMebers:'',currentSituacion:'',
+        housingStatus:'',housingStatusOther:'',
+        housingMaterial:'',housingMaterialOther:'',
+        housingRooms:'',housingServices:'',
+
         visible: false,
         validMail: false,
         selectplan: 2,
+<<<<<<< HEAD
         step: 3,
+=======
+        step: 1,
+>>>>>>> d2aa1c0c2590f1159cd562b4830aa67b3edb0ba3
     }
     title = "INGRESA TUS DATOS PERSONALES"
     validate = (ev) => {
@@ -342,7 +367,7 @@ class Stepper extends React.Component {
         return (
             <Grid
                 rows={['70px', '200px', '70px']}
-                columns={['250px', '250px', 'small', '250px', '250px']}
+                columns={['250px', '250px', 'auto', '250px', '250px']}
                 gap={{ column: "small", row: "medium" }}
                 areas={[
                     { name: 'one', start: [0, 0], end: [0, 0] },
@@ -350,33 +375,38 @@ class Stepper extends React.Component {
                     { name: 'three', start: [3, 0], end: [3, 0] },
                     { name: 'four', start: [4, 0], end: [4, 0] },
                     { name: 'five', start: [0, 1], end: [0, 1] },
+                    { name: 'six', start: [1, 1], end: [1, 1] },
+                    { name: 'seven', start: [3, 1], end: [3, 1] },
+                    { name: 'eight', start: [4, 1], end: [4, 1] },
+                    { name: 'nine', start: [0, 2], end: [0, 2] },
+                    { name: 'ten', start: [1, 2], end: [1, 2] },
                 ]}
             >
                 <Box gridArea="one" >
-                    <Text>Municipio</Text>
+                    <Text textAlign="start">Estado Civil</Text>
                     <Dropdown
-                        value={this.state.city}
-                        options={citySelectItems}
-                        onChange={(e) => { this.setState({ city: e.value }) }}
-                        placeholder="Selecciona Munic."
+                        value={this.state.maritalStatus}
+                        options={maritalStatusSelectItems}
+                        onChange={(e) => { this.setState({ maritalStatus: e.value }) }}
+                        placeholder="Desplegar lista."
                     />
                 </Box>
                 <Box gridArea="two" >
-                    <Text>Calle</Text>
+                    <Text textAlign="start">Ocupacion</Text>
                     <div className="p-inputgroup">
                         <InputText
-                            placeholder="Vote"
+                            placeholder="Nombre"
                             style={{ width: '100%' }}
-                            value={this.state.street}
+                            value={this.state.ocupation}
                             onChange={
                                 (e) => this.setState({
-                                    street: e.target.value
+                                    ocupation: e.target.value
                                 })
                             }
                         />
                         <Button
                             icon={
-                                this.state.street.length > 6 ?
+                                this.state.ocupation.length > 6 ?
                                     "pi pi-check" :
                                     "pi pi-minus"
                             }
@@ -386,22 +416,22 @@ class Stepper extends React.Component {
                     </div>
                 </Box>
                 <Box gridArea="three" >
-                    <Text>C. P.</Text>
+                    <Text textAlign="start">Miembros de la Familia</Text>
                     <div className="p-inputgroup">
                         <InputText
-                            placeholder="Vote"
+                            placeholder="Cantidad"
                             style={{ width: '100%' }}
                             keyfilter="pint"
-                            value={this.state.cp}
+                            value={this.state.familyMebers}
                             onChange={
                                 (e) => this.setState({
-                                    cp: e.target.value
+                                    familyMebers: e.target.value
                                 })
                             }
                         />
                         <Button
                             icon={
-                                this.state.cp.length > 4 ?
+                                this.state.familyMebers.length > 0 ?
                                     "pi pi-check" :
                                     "pi pi-minus"
                             }
@@ -411,29 +441,29 @@ class Stepper extends React.Component {
                     </div>
                 </Box>
                 <Box gridArea="four" >
-                    <Text>Municipio</Text>
+                    <Text textAlign="start">Situación Actual</Text>
                     <Dropdown
-                        value={this.state.city}
-                        options={citySelectItems}
-                        onChange={(e) => { this.setState({ city: e.value }) }}
-                        placeholder="Selecciona Munic."
+                        value={this.state.currentSituacion}
+                        options={currentSituacionSelectItems}
+                        onChange={(e) => { this.setState({ currentSituacion: e.value }) }}
+                        placeholder="Desplegar lista."
                     />
                 </Box>
                 <Box gridArea="five" >
-                    <Text>La casa donde vives es:</Text>
+                    <Text textAlign="start">La casa donde vives es:</Text>
                     <div className="p-col-12">
                         <RadioButton
                             inputId="rb1"
-                            value="val1"
-                            name="house"
+                            value="hStatus-1"
+                            name="housingStatus"
                             className="leftStick"
                             onChange={
                                 (e) => this.setState({
-                                    house: e.value
+                                    housingStatus: e.value
                                 })
                             }
                             checked={
-                                this.state.house === 'val1'
+                                this.state.housingStatus === 'val1'
                             }
                         />
                         <label
@@ -446,16 +476,16 @@ class Stepper extends React.Component {
                     <div className="p-col-12">
                         <RadioButton
                             inputId="rb2"
-                            value="val2"
-                            name="house"
+                            value="hStatus-2"
+                            name="housingStatus"
                             className="leftStick"
                             onChange={
                                 (e) => this.setState({
-                                    house: e.value
+                                    housingStatus: e.value
                                 })
                             }
                             checked={
-                                this.state.house === 'val2'
+                                this.state.housingStatus === 'val2'
                             }
                         />
                         <label
@@ -468,16 +498,16 @@ class Stepper extends React.Component {
                     <div className="p-col-12">
                         <RadioButton
                             inputId="rb3"
-                            value="val3"
-                            name="house"
+                            value="hStatus-3"
+                            name="housingStatus"
                             className="leftStick"
                             onChange={
                                 (e) => this.setState({
-                                    house: e.value
+                                    housingStatus: e.value
                                 })
                             }
                             checked={
-                                this.state.house === 'val3'
+                                this.state.housingStatus === 'val3'
                             }
                         />
                         <label
@@ -490,16 +520,16 @@ class Stepper extends React.Component {
                     <div className="p-col-12">
                         <RadioButton
                             inputId="rb4"
-                            value="val4"
-                            name="house"
+                            value={this.state.housingStatusOther}
+                            name="housingStatus"
                             className="leftStick"
                             onChange={
                                 (e) => this.setState({
-                                    house: e.value
+                                    housingStatus: e.value
                                 })
                             }
                             checked={
-                                this.state.house === 'val4'
+                                this.state.housingStatus === 'val4'
                             }
                         />
                         <label
@@ -510,22 +540,293 @@ class Stepper extends React.Component {
                         </label>
                     </div>
                     <br />
+                    <br />
                     <div className="p-col-12">
                         <InputText
                             placeholder={
-                                this.state.house != 'val4' ?
+                                this.state.housingStatus !== 'val4' ?
                                     '-' :
                                     'Especifique'
                             }
                             style={{ width: '100%' }}
-                            value={this.state.street}
-                            disabled={this.state.house != 'val4'}
+                            value={this.state.housingStatusOther}
+                            disabled={this.state.housingStatus !== 'val4'}
                             onChange={
                                 (e) => this.setState({
-                                    street: e.target.value
+                                    housingStatusOther: e.target.value
                                 })
                             }
                         />
+                    </div>
+                </Box>
+                <Box gridArea="six">
+                    <Text textAlign="start">Material de la casa:</Text>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb1"
+                            value="hMaterial-1"
+                            name="housingMaterial"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingMaterial: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingMaterial === 'val1'
+                            }
+                        />
+                        <label
+                            htmlFor="rb1"
+                            className="p-radiobutton-label"
+                        >
+                                Paredes y techo de concreto
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb2"
+                            value="hMaterial-2"
+                            name="housingMaterial"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingMaterial: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingMaterial === 'val2'
+                            }
+                        />
+                        <label
+                            htmlFor="rb2"
+                            className="p-radiobutton-label"
+                        >
+                        Paredes de concreto y techo de lamina/asbesto
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb3"
+                            value="hMaterial-3"
+                            name="housingMaterial"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingMaterial: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingMaterial === 'val3'
+                            }
+                        />
+                        <label
+                            htmlFor="rb3"
+                            className="p-radiobutton-label"
+                        >
+                            Paredes de madera o adobe y techo de lamina
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb4"
+                            value={this.state.housingMaterialOther}
+                            name="housingMaterial"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingMaterial: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingMaterial === 'val4'
+                            }
+                        />
+                        <label
+                            htmlFor="rb4"
+                            className="p-radiobutton-label"
+                        >
+                            Otro
+                        </label>
+                    </div>
+                    <br />
+                    <br />
+                    <div className="p-col-12">
+                        <InputText
+                            placeholder={
+                                this.state.housingMaterial !== 'val4' ?
+                                    '-' :
+                                    'Especifique'
+                            }
+                            style={{ width: '100%' }}
+                            value={this.state.housingMaterialOther}
+                            disabled={this.state.housingMaterial !== 'val4'}
+                            onChange={
+                                (e) => this.setState({
+                                    housingMaterialOther: e.target.value
+                                })
+                            }
+                        />
+                    </div>
+                </Box>
+                <Box gridArea="seven">
+                    <Text textAlign="start">Numero de cuartos:</Text>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb1"
+                            value="val1"
+                            name="housingRooms"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingRooms: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingRooms === 'val1'
+                            }
+                        />
+                        <label
+                            htmlFor="rb1"
+                            className="p-radiobutton-label"
+                        >
+                            1 - 2
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb2"
+                            value="val2"
+                            name="housingRooms"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingRooms: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingRooms === 'val2'
+                            }
+                        />
+                        <label
+                            htmlFor="rb2"
+                            className="p-radiobutton-label"
+                        >
+                            3 - 4
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb3"
+                            value="val3"
+                            name="housingRooms"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingRooms: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingRooms === 'val3'
+                            }
+                        />
+                        <label
+                            htmlFor="rb3"
+                            className="p-radiobutton-label"
+                        >
+                            5 o más
+                        </label>
+                    </div>
+                </Box>
+                <Box gridArea="eight" >
+                    <Text textAlign="start" >Servicios:</Text>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb1"
+                            value="val1"
+                            name="housingServices"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingServices: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingServices === 'val1'
+                            }
+                        />
+                        <label
+                            htmlFor="rb1"
+                            className="p-radiobutton-label"
+                        >
+                            Luz
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb2"
+                            value="val2"
+                            name="housingServices"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingServices: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingServices === 'val2'
+                            }
+                        />
+                        <label
+                            htmlFor="rb2"
+                            className="p-radiobutton-label"
+                        >
+                            Agua
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb3"
+                            value="val3"
+                            name="housingServices"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingServices: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingServices === 'val3'
+                            }
+                        />
+                        <label
+                            htmlFor="rb3"
+                            className="p-radiobutton-label"
+                        >
+                            Internet
+                        </label>
+                    </div>
+                    <div className="p-col-12">
+                        <RadioButton
+                            inputId="rb4"
+                            value="val4"
+                            name="housingServices"
+                            className="leftStick"
+                            onChange={
+                                (e) => this.setState({
+                                    housingServices: e.value
+                                })
+                            }
+                            checked={
+                                this.state.housingServices === 'val4'
+                            }
+                        />
+                        <label
+                            htmlFor="rb4"
+                            className="p-radiobutton-label"
+                        >
+                            TV de paga
+                        </label>
                     </div>
                 </Box>
             </Grid>
@@ -543,24 +844,35 @@ class Stepper extends React.Component {
                     { name: 'three', start: [2, 0], end: [2, 0] },
                     { name: 'four', start: [3, 0], end: [3, 0] },
                     { name: 'five', start: [0, 1], end: [0, 1] },
+                    { name: 'six', start: [1, 1], end: [1, 1] },
+                    { name: 'seven', start: [2, 1], end: [2, 1] },
+                    { name: 'eight', start: [3, 1], end: [3, 1] },
+
                 ]}
             >
                 <Box gridArea="five" >
                     <Card
+<<<<<<< HEAD
                         title="Title"
                         className={
                             this.state.selectplan == 1 ?
                                 "select" :
                                 "unselect"
+=======
+                        title="Title"
+                        className={
+                            this.state.selectplan === 1 ?
+                            "select" :
+                            "unselect"
                         }
                     >
                         {ipsumShort}
                         <Button
                             label="Seleccionar"
                             className={
-                                this.state.selectplan == 1 ?
-                                    "selectbtn p-button-raised" :
-                                    "unselectbtn p-button-raised"
+                                this.state.selectplan === 1 ?
+                                "selectbtn p-button-raised" :
+                                "unselectbtn p-button-raised"
                             }
                             onClick={(e) =>
                                 this.setState({
@@ -569,6 +881,93 @@ class Stepper extends React.Component {
                         />
                     </Card>
                 </Box>
+
+                <Box gridArea="six" >
+                    <Card
+                        title="Title"
+                        className={
+                            this.state.selectplan === 2 ?
+                            "select" :
+                            "unselect"
+>>>>>>> d2aa1c0c2590f1159cd562b4830aa67b3edb0ba3
+                        }
+                    >
+                        {ipsumShort}
+                        <Button
+                            label="Seleccionar"
+                            className={
+<<<<<<< HEAD
+                                this.state.selectplan == 1 ?
+                                    "selectbtn p-button-raised" :
+                                    "unselectbtn p-button-raised"
+                            }
+                            onClick={(e) =>
+                                this.setState({
+                                    selectplan: 1
+=======
+                                this.state.selectplan === 2 ?
+                                "selectbtn p-button-raised" :
+                                "unselectbtn p-button-raised"
+                            }
+                            onClick={(e) =>
+                                this.setState({
+                                    selectplan: 2
+>>>>>>> d2aa1c0c2590f1159cd562b4830aa67b3edb0ba3
+                                })}
+                        />
+                    </Card>
+                </Box>
+
+                <Box gridArea="seven" >
+                    <Card
+                        title="Title"
+                        className={
+                            this.state.selectplan === 3 ?
+                            "select" :
+                            "unselect"
+                        }
+                    >
+                        {ipsumShort}
+                        <Button
+                            label="Seleccionar"
+                            className={
+                                this.state.selectplan === 3 ?
+                                "selectbtn p-button-raised" :
+                                "unselectbtn p-button-raised"
+                            }
+                            onClick={(e) =>
+                                this.setState({
+                                    selectplan: 3
+                                })}
+                        />
+                    </Card>
+                </Box>
+
+
+                    <Box gridArea="eight" >
+                        <Card
+                            title="Title"
+                            className={
+                                this.state.selectplan === 4 ?
+                                "select" :
+                                "unselect"
+                            }
+                        >
+                            {ipsumShort}
+                            <Button
+                                label="Seleccionar"
+                                className={
+                                    this.state.selectplan === 4 ?
+                                    "selectbtn p-button-raised" :
+                                    "unselectbtn p-button-raised"
+                                }
+                                onClick={(e) =>
+                                    this.setState({
+                                        selectplan: 4
+                                    })}
+                            />
+                        </Card>
+                    </Box>
             </Grid>
         );
     }
@@ -615,7 +1014,7 @@ class Stepper extends React.Component {
                 <header className="App-header">
                     <Grid
                         rows={['xxsmall', 'xsmall', 'xsmall', '700px']}
-                        columns={['10%', '3%', '70%', '3%', '10%']}
+                        columns={['7%', '3%', '70%', '3%', '10%']}
                         gap="small"
                         areas={[
                             { name: 'header', start: [0, 0], end: [4, 0] },
@@ -673,16 +1072,16 @@ class Stepper extends React.Component {
                         </Box>
                         <Box gridArea="main">
                             {
-                                this.state.step == 0 ?
+                                this.state.step === 0 ?
                                     <this.step0 /> :
                                     (
-                                        this.state.step == 1 ?
+                                        this.state.step === 1 ?
                                             <this.step1 /> :
                                             (
-                                                this.state.step == 2 ?
+                                                this.state.step === 2 ?
                                                     <this.step2 /> :
                                                     (
-                                                        this.state.step == 3 ?
+                                                        this.state.step === 3 ?
                                                             <this.step3 /> :
                                                             <this.step4 />
                                                     )
@@ -695,7 +1094,7 @@ class Stepper extends React.Component {
                             alignContent="center"
                         >
                             <Box direction="column" alignSelf="end" height="60%">
-                                {this.state.step == 3 ?
+                                {this.state.step === 3 ?
                                     <span></span> :
                                     <Button
                                         label="Siguiente"

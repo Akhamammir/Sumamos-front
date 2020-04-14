@@ -232,9 +232,11 @@ body{
   .p-radiobutton-label{
     font-family: 'Quicksand', sans-serif!important;
     font-weight: 300!important;
-    font-size: x-large;
+    font-size: large;
+    text-align: left;
   }
   .p-col-12{
+    display:flex;
     align-self: flex-start!important;
   }
   .unselect{
