@@ -9,6 +9,8 @@ import { SelectButton } from 'primereact/selectbutton';
 import { Calendar } from 'primereact/calendar';
 import { OverlayPanel } from 'primereact/overlaypanel';
 import { RadioButton } from 'primereact/radiobutton';
+import { ProgressBar } from 'primereact/progressbar';
+import { FileUpload } from 'primereact/fileupload';
 import { Card } from 'primereact/card';
 import { Grommet, Grid, Box, Heading, Text } from 'grommet';
 import { email } from './../Models/Regex'
@@ -69,7 +71,7 @@ class Stepper extends React.Component {
         visible: false,
         validMail: false,
         selectplan: 2,
-        step: 1,
+        step: 0,
     }
     title = "INGRESA TUS DATOS PERSONALES"
     validate = (ev) => {
@@ -850,8 +852,8 @@ class Stepper extends React.Component {
                         title="Title"
                         className={
                             this.state.selectplan === 1 ?
-                            "select" :
-                            "unselect"
+                                "select" :
+                                "unselect"
                         }
                     >
                         {ipsumShort}
@@ -859,8 +861,8 @@ class Stepper extends React.Component {
                             label="Seleccionar"
                             className={
                                 this.state.selectplan === 1 ?
-                                "selectbtn p-button-raised" :
-                                "unselectbtn p-button-raised"
+                                    "selectbtn p-button-raised" :
+                                    "unselectbtn p-button-raised"
                             }
                             onClick={(e) =>
                                 this.setState({
@@ -950,7 +952,28 @@ class Stepper extends React.Component {
     }
     step3 = () => {
         return (
-            <div>Step 4</div>
+            <Grid
+                rows={['50px', '70px', '70px', '70px']}
+                columns={['75%', 'small', 'xsmall']}
+                gap={{ column: "small", row: "medium" }}
+                areas={[
+                    { name: 'one', start: [0, 0], end: [0, 0] },
+                    { name: 'two', start: [1, 0], end: [1, 0] },
+                    { name: 'three', start: [2, 0], end: [2, 0] },
+
+                ]}
+            >
+                <Box gridArea="one" >
+                    <ProgressBar mode="indeterminate" />
+                </Box>
+                <Box gridArea="two">
+                    <FileUpload
+                        name="demo"
+                        url="./upload"
+                        mode="basic"
+                    ></FileUpload>
+                </Box>
+            </Grid>
         );
     }
     step4 = () => {
