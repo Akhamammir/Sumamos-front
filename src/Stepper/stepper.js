@@ -596,7 +596,7 @@ class Stepper extends React.Component {
                             htmlFor="rb2"
                             className="p-radiobutton-label"
                         >
-                        Paredes de concreto y techo de lamina/asbesto 
+                        Paredes de concreto y techo de lamina/asbesto
                         </label>
                     </div>
                     <div className="p-col-12">
@@ -838,10 +838,14 @@ class Stepper extends React.Component {
                     { name: 'three', start: [2, 0], end: [2, 0] },
                     { name: 'four', start: [3, 0], end: [3, 0] },
                     { name: 'five', start: [0, 1], end: [0, 1] },
+                    { name: 'six', start: [1, 1], end: [1, 1] },
+                    { name: 'seven', start: [2, 1], end: [2, 1] },
+                    { name: 'eight', start: [3, 1], end: [3, 1] },
+
                 ]}
             >
                 <Box gridArea="five" >
-                    <Card 
+                    <Card
                         title="Title"
                         className={
                             this.state.selectplan === 1 ?
@@ -857,13 +861,89 @@ class Stepper extends React.Component {
                                 "selectbtn p-button-raised" :
                                 "unselectbtn p-button-raised"
                             }
-                            onClick={(e) => 
-                                this.setState({ 
-                                    selectplan: 1 
+                            onClick={(e) =>
+                                this.setState({
+                                    selectplan: 1
                                 })}
                         />
                     </Card>
                 </Box>
+
+                <Box gridArea="six" >
+                    <Card
+                        title="Title"
+                        className={
+                            this.state.selectplan === 2 ?
+                            "select" :
+                            "unselect"
+                        }
+                    >
+                        {ipsumShort}
+                        <Button
+                            label="Seleccionar"
+                            className={
+                                this.state.selectplan === 2 ?
+                                "selectbtn p-button-raised" :
+                                "unselectbtn p-button-raised"
+                            }
+                            onClick={(e) =>
+                                this.setState({
+                                    selectplan: 2
+                                })}
+                        />
+                    </Card>
+                </Box>
+
+                <Box gridArea="seven" >
+                    <Card
+                        title="Title"
+                        className={
+                            this.state.selectplan === 3 ?
+                            "select" :
+                            "unselect"
+                        }
+                    >
+                        {ipsumShort}
+                        <Button
+                            label="Seleccionar"
+                            className={
+                                this.state.selectplan === 3 ?
+                                "selectbtn p-button-raised" :
+                                "unselectbtn p-button-raised"
+                            }
+                            onClick={(e) =>
+                                this.setState({
+                                    selectplan: 3
+                                })}
+                        />
+                    </Card>
+                </Box>
+
+
+                    <Box gridArea="eight" >
+                        <Card
+                            title="Title"
+                            className={
+                                this.state.selectplan === 4 ?
+                                "select" :
+                                "unselect"
+                            }
+                        >
+                            {ipsumShort}
+                            <Button
+                                label="Seleccionar"
+                                className={
+                                    this.state.selectplan === 4 ?
+                                    "selectbtn p-button-raised" :
+                                    "unselectbtn p-button-raised"
+                                }
+                                onClick={(e) =>
+                                    this.setState({
+                                        selectplan: 4
+                                    })}
+                            />
+                        </Card>
+                    </Box>
             </Grid>
         );
     }
@@ -889,7 +969,7 @@ class Stepper extends React.Component {
                 <header className="App-header">
                     <Grid
                         rows={['xxsmall', 'xsmall', 'xsmall', '700px']}
-                        columns={['10%', '3%', '70%', '3%', '10%']}
+                        columns={['7%', '3%', '70%', '3%', '10%']}
                         gap="small"
                         areas={[
                             { name: 'header', start: [0, 0], end: [4, 0] },
