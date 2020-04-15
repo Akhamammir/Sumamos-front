@@ -843,8 +843,6 @@ class Stepper extends React.Component {
                     { name: 'six', start: [1, 1], end: [1, 1] },
                     { name: 'seven', start: [2, 1], end: [2, 1] },
                     { name: 'eight', start: [3, 1], end: [3, 1] },
-                    
-
                 ]}
             >
                 <Box gridArea="five" >
@@ -871,7 +869,30 @@ class Stepper extends React.Component {
                         />
                     </Card>
                 </Box>
-
+                <Box gridArea="six" >
+                    <Card
+                        title="Title"
+                        className={
+                            this.state.selectplan === 2 ?
+                            "select" :
+                            "unselect"
+                        }
+                    >
+                        {ipsumShort}
+                        <Button
+                            label="Seleccionar"
+                            className={
+                                this.state.selectplan === 2 ?
+                                "selectbtn p-button-raised" :
+                                "unselectbtn p-button-raised"
+                            }
+                            onClick={(e) =>
+                                this.setState({
+                                    selectplan: 2
+                                })}
+                        />
+                    </Card>
+                </Box>
                 <Box gridArea="seven" >
                     <Card
                         title="Title"
