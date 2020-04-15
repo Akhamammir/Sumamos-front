@@ -949,27 +949,78 @@ class Stepper extends React.Component {
     step3 = () => {
         return (
             <Grid
-                rows={['50px', '70px', '70px', '70px']}
-                columns={['75%', 'small', 'xsmall']}
-                gap={{ column: "small", row: "medium" }}
-                areas={[
-                    { name: 'one', start: [0, 0], end: [0, 0] },
-                    { name: 'two', start: [1, 0], end: [1, 0] },
-                    { name: 'three', start: [2, 0], end: [2, 0] },
-
-                ]}
+            rows={['50px', '70px', '70px', '70px']}
+            columns={['75%', 'small', 'xsmall']}
+            gap={{ column: "small", row: "medium" }}
+            areas={[
+              { name: 'one', start: [0, 0], end: [0, 0] },
+              { name: 'two', start: [1, 0], end: [1, 0] },
+              { name: 'three', start: [2, 0], end: [2, 0] },
+              { name: 'four', start: [0, 1], end: [0, 1] },
+              { name: 'five', start: [1, 1], end: [1, 1] },
+              { name: 'six', start: [2, 1], end: [2, 1] },
+              { name: 'seven', start: [0, 2], end: [0, 2] },
+              { name: 'eight', start: [1, 2], end: [1, 2] },
+              { name: 'nine', start: [2, 2], end: [2, 2] },
+              { name: 'ten', start: [0, 3], end: [0, 3] },
+              { name: 'eleven', start: [1, 3], end: [1, 3] },
+              { name: 'twelve', start: [2, 3], end: [2, 3] },
+              { name: 'btn', start: [3, 0], end: [3, 3] },
+            ]}
             >
-                <Box gridArea="one" >
-                    <ProgressBar mode="indeterminate" />
+            <Box gridArea="one" >
+              <ProgressBar mode="indeterminate" />
+            </Box>
+            <Box gridArea="two">
+              <FileUpload
+                  name="demo"
+                  url="./upload"
+                  mode="basic"
+              ></FileUpload>
+            </Box>
+            <Box gridArea="four" >
+              <ProgressBar mode="indeterminate" />
+            </Box>
+            <Box gridArea="five">
+              <FileUpload
+                  name="demo"
+                  url="./upload"
+                  mode="basic"
+              ></FileUpload>
+            </Box>
+            <Box gridArea="seven" >
+              <ProgressBar mode="indeterminate" />
+            </Box>
+            <Box gridArea="eight">
+              <FileUpload
+                  name="demo"
+                  url="./upload"
+                  mode="basic"
+              ></FileUpload>
+            </Box>
+            <Box gridArea="ten" >
+              <ProgressBar mode="indeterminate" />
+            </Box>
+            <Box gridArea="eleven">
+              <FileUpload
+                  name="demo"
+                  url="./upload"
+                  mode="basic"
+              ></FileUpload>
+            </Box>
+            <Box direction="column"
+                gridArea="btn"
+                alignContent="center"
+            >
+                <Box direction="column" alignSelf="end" height="60%">
+                        <Button
+                            label="Enviar Solicitud"
+                            className="nav2BtnB"
+                        />
                 </Box>
-                <Box gridArea="two">
-                    <FileUpload
-                        name="demo"
-                        url="./upload"
-                        mode="basic"
-                    ></FileUpload>
-                </Box>
-            </Grid>
+            </Box>
+
+          </Grid>
         );
     }
     step4 = () => {
