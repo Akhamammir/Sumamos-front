@@ -1,6 +1,7 @@
 import React from 'react';
 import { InputText } from 'primereact/inputtext';
 import { InputMask } from 'primereact/inputmask';
+import { Checkbox } from 'primereact/checkbox';
 import { Button } from 'primereact/button';
 import { Steps } from 'primereact/steps';
 import { Sidebar } from 'primereact/sidebar';
@@ -33,7 +34,7 @@ const citySelectItems = [
 const maritalStatusSelectItems = [
     { label: 'Soltero(a)', value: 'single' },
     { label: 'Casado(a)', value: 'married' },
-    { label: 'Divorsiado(a)', value: 'divorced' },
+    { label: 'Divorciado(a)', value: 'divorced' },
     { label: 'Viudo(a)', value: 'widow' },
 ];
 const currentSituacionSelectItems = [
@@ -50,28 +51,32 @@ const genders = [
 ];
 class Stepper extends React.Component {
     //<img src={logo} className="App-logo" alt="logo" />
-    state = {
-        name: {
-            fNames: '',
-            pName: '',
-            mName: ''
-        },
-        street: '', number: '',
-        city: '', hood: '',
-        gender: '', date: '',
-        town: '', email: '',
-        cp: '', phone: '',
-        //Step 1 Values
-        maritalStatus:'',ocupation:'',
-        familyMebers:'',currentSituacion:'',
-        housingStatus:'',housingStatusOther:'',
-        housingMaterial:'',housingMaterialOther:'',
-        housingRooms:'',housingServices:'',
-
-        visible: false,
-        validMail: false,
-        selectplan: 2,
-        step: 0,
+    constructor(props) {
+        super(props);
+        this.state = {
+            name: {
+                fNames: '',
+                pName: '',
+                mName: ''
+            },
+            street: '', number: '',
+            city: '', hood: '',
+            gender: '', date: '',
+            town: '', email: '',
+            cp: '', phone: '',
+            //Step 1 Values
+            maritalStatus:'',ocupation:'',
+            familyMebers:'',currentSituacion:'',
+            housingStatus:'',housingStatusOther:'',
+            housingMaterial:'',housingMaterialOther:'',
+            housingRooms:'', housingServices:[],
+            visible: false,
+            validMail: false,
+            selectplan: 2,
+            step: 1,
+        }
+        this.onServiceChange= this.onServiceChange.bind(this)
+        this.validate= this.validate.bind(this)
     }
     title = "INGRESA TUS DATOS PERSONALES"
     validate = (ev) => {
@@ -86,6 +91,14 @@ class Stepper extends React.Component {
                 this.setState({ validMail: false });
             }
         });
+    }
+    onServiceChange(e) {
+        let selectedServices = [...this.state.housingServices];
+        if(e.checked)
+            selectedServices.push(e.value);
+        else
+            selectedServices.splice(selectedServices.indexOf(e.value), 1);
+        this.setState({housingServices: selectedServices});
     }
     step0 = () => {
         return (
@@ -113,6 +126,7 @@ class Stepper extends React.Component {
                     <Text>Apelido Paterno</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Vote"
                             value={this.state.name.pName}
                             onChange={
@@ -136,6 +150,7 @@ class Stepper extends React.Component {
                     <Text>Apelido Materno</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Vote"
                             value={this.state.name.mName}
                             onChange={
@@ -159,6 +174,7 @@ class Stepper extends React.Component {
                     <Text>Calle</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Vote"
                             value={this.state.street}
                             onChange={
@@ -182,6 +198,7 @@ class Stepper extends React.Component {
                     <Text>Numero</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Vote"
                             value={this.state.number}
                             onChange={
@@ -205,6 +222,7 @@ class Stepper extends React.Component {
                     <Text>Nombre(s)</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Vote"
                             style={{ width: '100%' }}
                             value={this.state.name.fNames}
@@ -262,6 +280,7 @@ class Stepper extends React.Component {
                     <Text>Poblado</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Vote"
                             value={this.state.town}
                             onChange={
@@ -285,6 +304,7 @@ class Stepper extends React.Component {
                     <Text>C. P.</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Vote"
                             keyfilter="pint"
                             value={this.state.cp}
@@ -309,6 +329,7 @@ class Stepper extends React.Component {
                     <Text>e-mail</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Vote"
                             value={this.state.email}
                             onChange={(e) => this.validate(e)}
@@ -381,6 +402,7 @@ class Stepper extends React.Component {
                 <Box gridArea="one" >
                     <Text textAlign="start">Estado Civil</Text>
                     <Dropdown
+                        required
                         value={this.state.maritalStatus}
                         options={maritalStatusSelectItems}
                         onChange={(e) => { this.setState({ maritalStatus: e.value }) }}
@@ -391,6 +413,7 @@ class Stepper extends React.Component {
                     <Text textAlign="start">Ocupacion</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Nombre"
                             style={{ width: '100%' }}
                             value={this.state.ocupation}
@@ -415,6 +438,7 @@ class Stepper extends React.Component {
                     <Text textAlign="start">Miembros de la Familia</Text>
                     <div className="p-inputgroup">
                         <InputText
+                            required
                             placeholder="Cantidad"
                             style={{ width: '100%' }}
                             keyfilter="pint"
@@ -445,10 +469,11 @@ class Stepper extends React.Component {
                         placeholder="Desplegar lista."
                     />
                 </Box>
-                <Box gridArea="five" >
+                <Box gridArea="five" justify="between">
                     <Text textAlign="start">La casa donde vives es:</Text>
                     <div className="p-col-12">
                         <RadioButton
+                            required
                             inputId="rb1"
                             value="hStatus-1"
                             name="housingStatus"
@@ -459,7 +484,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingStatus === 'val1'
+                                this.state.housingStatus === 'hStatus-1'
                             }
                         />
                         <label
@@ -481,7 +506,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingStatus === 'val2'
+                                this.state.housingStatus === 'hStatus-2'
                             }
                         />
                         <label
@@ -503,7 +528,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingStatus === 'val3'
+                                this.state.housingStatus === 'hStatus-3'
                             }
                         />
                         <label
@@ -516,7 +541,7 @@ class Stepper extends React.Component {
                     <div className="p-col-12">
                         <RadioButton
                             inputId="rb4"
-                            value={this.state.housingStatusOther}
+                            value="hStatus-4"
                             name="housingStatus"
                             className="leftStick"
                             onChange={
@@ -525,7 +550,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingStatus === 'val4'
+                                this.state.housingStatus === 'hStatus-4'
                             }
                         />
                         <label
@@ -537,16 +562,18 @@ class Stepper extends React.Component {
                     </div>
                     <br />
                     <br />
+                </Box>
+                <Box gridArea="nine">
                     <div className="p-col-12">
                         <InputText
                             placeholder={
-                                this.state.housingStatus !== 'val4' ?
+                                this.state.housingStatus !== 'hStatus-4' ?
                                     '-' :
                                     'Especifique'
                             }
                             style={{ width: '100%' }}
                             value={this.state.housingStatusOther}
-                            disabled={this.state.housingStatus !== 'val4'}
+                            disabled={this.state.housingStatus !== 'hStatus-4'}
                             onChange={
                                 (e) => this.setState({
                                     housingStatusOther: e.target.value
@@ -559,6 +586,7 @@ class Stepper extends React.Component {
                     <Text textAlign="start">Material de la casa:</Text>
                     <div className="p-col-12">
                         <RadioButton
+                            required
                             inputId="rb1"
                             value="hMaterial-1"
                             name="housingMaterial"
@@ -569,7 +597,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingMaterial === 'val1'
+                                this.state.housingMaterial === 'hMaterial-1'
                             }
                         />
                         <label
@@ -591,7 +619,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingMaterial === 'val2'
+                                this.state.housingMaterial === 'hMaterial-2'
                             }
                         />
                         <label
@@ -603,6 +631,7 @@ class Stepper extends React.Component {
                     </div>
                     <div className="p-col-12">
                         <RadioButton
+                            required
                             inputId="rb3"
                             value="hMaterial-3"
                             name="housingMaterial"
@@ -613,7 +642,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingMaterial === 'val3'
+                                this.state.housingMaterial === 'hMaterial-3'
                             }
                         />
                         <label
@@ -626,7 +655,7 @@ class Stepper extends React.Component {
                     <div className="p-col-12">
                         <RadioButton
                             inputId="rb4"
-                            value={this.state.housingMaterialOther}
+                            value='hMaterial-4'
                             name="housingMaterial"
                             className="leftStick"
                             onChange={
@@ -635,7 +664,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingMaterial === 'val4'
+                                this.state.housingMaterial === 'hMaterial-4'
                             }
                         />
                         <label
@@ -647,16 +676,18 @@ class Stepper extends React.Component {
                     </div>
                     <br />
                     <br />
+                    </Box>
+                <Box gridArea="ten">
                     <div className="p-col-12">
                         <InputText
                             placeholder={
-                                this.state.housingMaterial !== 'val4' ?
+                                this.state.housingMaterial !== 'hMaterial-4' ?
                                     '-' :
                                     'Especifique'
                             }
                             style={{ width: '100%' }}
                             value={this.state.housingMaterialOther}
-                            disabled={this.state.housingMaterial !== 'val4'}
+                            disabled={this.state.housingMaterial !== 'hMaterial-4'}
                             onChange={
                                 (e) => this.setState({
                                     housingMaterialOther: e.target.value
@@ -665,12 +696,13 @@ class Stepper extends React.Component {
                         />
                     </div>
                 </Box>
-                <Box gridArea="seven">
+                <Box gridArea="seven" justify="around">
                     <Text textAlign="start">Numero de cuartos:</Text>
                     <div className="p-col-12">
                         <RadioButton
+                            required
                             inputId="rb1"
-                            value="val1"
+                            value="hrooms-1"
                             name="housingRooms"
                             className="leftStick"
                             onChange={
@@ -679,7 +711,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingRooms === 'val1'
+                                this.state.housingRooms === 'hrooms-1'
                             }
                         />
                         <label
@@ -692,7 +724,7 @@ class Stepper extends React.Component {
                     <div className="p-col-12">
                         <RadioButton
                             inputId="rb2"
-                            value="val2"
+                            value="hrooms-2"
                             name="housingRooms"
                             className="leftStick"
                             onChange={
@@ -701,7 +733,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingRooms === 'val2'
+                                this.state.housingRooms === 'hrooms-2'
                             }
                         />
                         <label
@@ -714,7 +746,7 @@ class Stepper extends React.Component {
                     <div className="p-col-12">
                         <RadioButton
                             inputId="rb3"
-                            value="val3"
+                            value="hrooms-3"
                             name="housingRooms"
                             className="leftStick"
                             onChange={
@@ -723,7 +755,7 @@ class Stepper extends React.Component {
                                 })
                             }
                             checked={
-                                this.state.housingRooms === 'val3'
+                                this.state.housingRooms === 'hrooms-3'
                             }
                         />
                         <label
@@ -734,95 +766,23 @@ class Stepper extends React.Component {
                         </label>
                     </div>
                 </Box>
-                <Box gridArea="eight" >
+                <Box gridArea="eight" justify="around">
                     <Text textAlign="start" >Servicios:</Text>
                     <div className="p-col-12">
-                        <RadioButton
-                            inputId="rb1"
-                            value="val1"
-                            name="housingServices"
-                            className="leftStick"
-                            onChange={
-                                (e) => this.setState({
-                                    housingServices: e.value
-                                })
-                            }
-                            checked={
-                                this.state.housingServices === 'val1'
-                            }
-                        />
-                        <label
-                            htmlFor="rb1"
-                            className="p-radiobutton-label"
-                        >
-                            Luz
-                        </label>
+                        <Checkbox  required className="leftStick" inputId="cb1" value="Luz" onChange={this.onServiceChange} checked={this.state.housingServices.includes('Luz')}></Checkbox>
+                        <label htmlFor="cb1" className="p-radiobutton-label">Luz</label>
                     </div>
                     <div className="p-col-12">
-                        <RadioButton
-                            inputId="rb2"
-                            value="val2"
-                            name="housingServices"
-                            className="leftStick"
-                            onChange={
-                                (e) => this.setState({
-                                    housingServices: e.value
-                                })
-                            }
-                            checked={
-                                this.state.housingServices === 'val2'
-                            }
-                        />
-                        <label
-                            htmlFor="rb2"
-                            className="p-radiobutton-label"
-                        >
-                            Agua
-                        </label>
+                        <Checkbox className="leftStick" inputId="cb2" value="Agua" onChange={this.onServiceChange} checked={this.state.housingServices.includes('Agua')}></Checkbox>
+                        <label htmlFor="cb2" className="p-radiobutton-label">Agua</label>
                     </div>
                     <div className="p-col-12">
-                        <RadioButton
-                            inputId="rb3"
-                            value="val3"
-                            name="housingServices"
-                            className="leftStick"
-                            onChange={
-                                (e) => this.setState({
-                                    housingServices: e.value
-                                })
-                            }
-                            checked={
-                                this.state.housingServices === 'val3'
-                            }
-                        />
-                        <label
-                            htmlFor="rb3"
-                            className="p-radiobutton-label"
-                        >
-                            Internet
-                        </label>
+                        <Checkbox className="leftStick" inputId="cb3" value="Internet" onChange={this.onServiceChange} checked={this.state.housingServices.includes('Internet')}></Checkbox>
+                        <label htmlFor="cb3" className="p-radiobutton-label">Internet</label>
                     </div>
                     <div className="p-col-12">
-                        <RadioButton
-                            inputId="rb4"
-                            value="val4"
-                            name="housingServices"
-                            className="leftStick"
-                            onChange={
-                                (e) => this.setState({
-                                    housingServices: e.value
-                                })
-                            }
-                            checked={
-                                this.state.housingServices === 'val4'
-                            }
-                        />
-                        <label
-                            htmlFor="rb4"
-                            className="p-radiobutton-label"
-                        >
-                            TV de paga
-                        </label>
+                        <Checkbox className="leftStick" inputId="cb4" value="TV" onChange={this.onServiceChange} checked={this.state.housingServices.includes('TV')}></Checkbox>
+                        <label htmlFor="cb4" className="p-radiobutton-label">TV de paga</label>
                     </div>
                 </Box>
             </Grid>
@@ -835,10 +795,6 @@ class Stepper extends React.Component {
                 columns={['auto','250px', '250px', '250px', '250px','auto']}
                 gap={{ column: "small", row: "medium" }}
                 areas={[
-                    // { name: 'one', start: [0, 0], end: [0, 0] },
-                    // { name: 'two', start: [1, 0], end: [1, 0] },
-                    // { name: 'three', start: [2, 0], end: [2, 0] },
-                    // { name: 'four', start: [3, 0], end: [3, 0] },
                     { name: 'five', start: [4, 1], end: [4, 1] },
                     { name: 'six', start: [1, 1], end: [1, 1] },
                     { name: 'seven', start: [2, 1], end: [2, 1] },
@@ -917,8 +873,6 @@ class Stepper extends React.Component {
                         />
                     </Card>
                 </Box>
-
-
                     <Box gridArea="eight" >
                         <Card
                             title="Title"
