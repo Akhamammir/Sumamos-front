@@ -16,7 +16,9 @@ import { Card } from 'primereact/card';
 import { Grommet, Grid, Box, Heading, Text } from 'grommet';
 import { email } from './../Models/Regex'
 import { ipsumShort } from './../Models/Lorem'
+import axios from 'axios';
 import './stepper.css';
+
 const items = [
     { label: 'Datos Personales' },
     { label: 'Datos Socioeconomicos' },
@@ -54,6 +56,7 @@ class Stepper extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            _id: undefined,
             name: {
                 fNames: '',
                 pName: '',
@@ -69,16 +72,32 @@ class Stepper extends React.Component {
             familyMebers:'',currentSituacion:'',
             housingStatus:'',housingStatusOther:'',
             housingMaterial:'',housingMaterialOther:'',
-            housingRooms:'', housingServices:[],
+            housingRooms:'', housingServices:'',
+            Services:[],
             visible: false,
             validMail: false,
-            selectplan: 2,
-            step: 1,
+            selectplan: '',
+            step: 0,
+            noValid:{
+                step0 : {
+                    pName: true,fNames: true,
+                    mName: true,street: true,
+                    number: true,city: true,
+                    hood: true,gender: true,
+                    date: true,town: true,
+                    email: true,cp: true,
+                    phone: true,
+                    },
+                step1 :{},
+                step2 :{}
+            },
+            frwDisable:true
         }
         this.onServiceChange= this.onServiceChange.bind(this)
         this.validate= this.validate.bind(this)
     }
     title = "INGRESA TUS DATOS PERSONALES"
+
     validate = (ev) => {
         let temp = { ...ev };
         this.setState({ email: ev.target.value }, function () {
@@ -92,14 +111,53 @@ class Stepper extends React.Component {
             }
         });
     }
+
+
+    validateIputs = (name,text,limit) => {
+        console.log(text)
+        let error;
+        const step = `step${this.state.step}`
+        if(text!==null){
+            error = (text !== '' && text.length < limit) || text.trim()==='';
+        }else{
+            error = true; 
+        }
+        
+        this.setState(state =>({
+            noValid:{
+                ...state.noValid,
+                [step] : {
+                    ...state.noValid[step],
+                    [name]:error
+                }
+            }
+        }))
+    }
+
     onServiceChange(e) {
-        let selectedServices = [...this.state.housingServices];
+        let selectedServices = [...this.state.Services];
         if(e.checked)
             selectedServices.push(e.value);
         else
             selectedServices.splice(selectedServices.indexOf(e.value), 1);
-        this.setState({housingServices: selectedServices});
+        this.setState({Services: selectedServices},() => {
+            this.setState({
+                housingServices: this.state.Services.join(', '),
+            });
+        }
+            );
     }
+    Register = () => {
+        axios.post('http://34.94.115.43:30001/users', { state: this.state }).then((res) => {
+            console.log(res);
+            const { status } = res;
+            if (status !== 200) alert('Error.', 5000);
+            if(status === 200) {
+                this.setState({step:4})
+            }
+
+        });
+    };
     step0 = () => {
         return (
             <Grid
@@ -130,9 +188,12 @@ class Stepper extends React.Component {
                             placeholder="Vote"
                             value={this.state.name.pName}
                             onChange={
-                                (e) => this.setState({
-                                    name: { ...this.state.name, pName: e.target.value }
-                                })
+                                (e) => {
+                                    this.setState({
+                                        name: { ...this.state.name, pName: e.target.value }
+                                    })
+                                    this.validateIputs("pName",e.target.value,3) 
+                                }
                             }
                         />
                         <Button
@@ -154,9 +215,13 @@ class Stepper extends React.Component {
                             placeholder="Vote"
                             value={this.state.name.mName}
                             onChange={
-                                (e) => this.setState({
-                                    name: { ...this.state.name, mName: e.target.value }
-                                })
+                                (e) => { 
+                                    this.setState({
+                                        name: { ...this.state.name, mName: e.target.value }
+                                    })
+                                    this.validateIputs("mName",e.target.value,3) 
+
+                                }
                             }
                         />
                         <Button
@@ -178,9 +243,12 @@ class Stepper extends React.Component {
                             placeholder="Vote"
                             value={this.state.street}
                             onChange={
-                                (e) => this.setState({
-                                    street: e.target.value
-                                })
+                                (e) => {
+                                    this.setState({
+                                        street: e.target.value
+                                    })
+                                    this.validateIputs("street",e.target.value,7) 
+                                }
                             }
                         />
                         <Button
@@ -202,9 +270,11 @@ class Stepper extends React.Component {
                             placeholder="Vote"
                             value={this.state.number}
                             onChange={
-                                (e) => this.setState({
+                                (e) => {this.setState({
                                     number: e.target.value
-                                })
+                                    })
+                                    this.validateIputs("number",e.target.value,1) 
+                                }
                             }
                         />
                         <Button
@@ -227,9 +297,11 @@ class Stepper extends React.Component {
                             style={{ width: '100%' }}
                             value={this.state.name.fNames}
                             onChange={
-                                (e) => this.setState({
+                                (e) => {this.setState({
                                     name: { ...this.state.name, fNames: e.target.value }
                                 })
+                                this.validateIputs("fNames",e.target.value,3) 
+                                }
                             }
                         />
                         <Button
@@ -248,7 +320,11 @@ class Stepper extends React.Component {
                     <Dropdown
                         value={this.state.city}
                         options={citySelectItems}
-                        onChange={(e) => { this.setState({ city: e.value }) }}
+                        onChange={(e) => { 
+                            this.setState({ city: e.value })
+                            this.validateIputs("city",e.value,1) 
+
+                        }}
                         placeholder="Selecciona Munic."
                     />
                 </Box>
@@ -257,8 +333,11 @@ class Stepper extends React.Component {
                     <Dropdown
                         value={this.state.hood}
                         options={citySelectItems}
-                        onChange={(e) => { this.setState({ hood: e.value }) }}
-                        placeholder="Selecciona Munic."
+                        onChange={(e) => { 
+                            this.setState({ hood: e.value })
+                            this.validateIputs("hood",e.value,1)
+                        }}
+                        placeholder="Selecciona Col."
                     />
                 </Box>
                 <Box gridArea="eight" >
@@ -266,14 +345,21 @@ class Stepper extends React.Component {
                     <SelectButton
                         value={this.state.gender}
                         options={genders}
-                        onChange={(e) => this.setState({ gender: e.value })}
+                        onChange={(e) => {
+                            this.setState({ gender: e.value })
+                            this.validateIputs("gender",e.value,0)
+                        }}
                     ></SelectButton>
                 </Box>
                 <Box gridArea="nine" >
                     <Text>Fecha de Nacimiento</Text>
                     <Calendar
                         value={this.state.date}
-                        onChange={(e) => this.setState({ date: e.value })}
+                        onChange={(e) => {
+                                this.setState({ date: e.value })
+                                this.validateIputs("date",e.value.toString(),1)
+                            }
+                        }
                     ></Calendar>
                 </Box>
                 <Box gridArea="ten" >
@@ -284,9 +370,11 @@ class Stepper extends React.Component {
                             placeholder="Vote"
                             value={this.state.town}
                             onChange={
-                                (e) => this.setState({
-                                    town: e.target.value
-                                })
+                                (e) => {
+                                    this.setState({town: e.target.value})
+                                    this.validateIputs("town",e.target.value,3)
+
+                                }
                             }
                         />
                         <Button
@@ -309,9 +397,12 @@ class Stepper extends React.Component {
                             keyfilter="pint"
                             value={this.state.cp}
                             onChange={
-                                (e) => this.setState({
+                                (e) => {this.setState({
                                     cp: e.target.value
                                 })
+                                this.validateIputs("cp",e.target.value,5)
+
+                            }
                             }
                         />
                         <Button
@@ -332,7 +423,7 @@ class Stepper extends React.Component {
                             required
                             placeholder="Vote"
                             value={this.state.email}
-                            onChange={(e) => this.validate(e)}
+                            onChange={(e) => {this.validate(e)}}
                         />
                         <Button
                             id='mailButton'
@@ -364,7 +455,12 @@ class Stepper extends React.Component {
                         <InputMask
                             mask="(999)-999-9999"
                             value={this.state.phone}
-                            onChange={(e) => this.setState({ phone: e.value })}
+                            onChange={(e) => {
+                                this.setState({ phone: e.value })
+                                this.validateIputs("phone",e.target.value,5)
+
+                                }
+                            }
                         ></InputMask>
                         <Button
                             icon={
@@ -425,7 +521,7 @@ class Stepper extends React.Component {
                         />
                         <Button
                             icon={
-                                this.state.ocupation.length > 6 ?
+                                this.state.ocupation.length > 5 ?
                                     "pi pi-check" :
                                     "pi pi-minus"
                             }
@@ -769,19 +865,19 @@ class Stepper extends React.Component {
                 <Box gridArea="eight" justify="around">
                     <Text textAlign="start" >Servicios:</Text>
                     <div className="p-col-12">
-                        <Checkbox  required className="leftStick" inputId="cb1" value="Luz" onChange={this.onServiceChange} checked={this.state.housingServices.includes('Luz')}></Checkbox>
+                        <Checkbox  required className="leftStick" inputId="cb1" value="Luz" onChange={this.onServiceChange} checked={this.state.Services.includes('Luz')}></Checkbox>
                         <label htmlFor="cb1" className="p-radiobutton-label">Luz</label>
                     </div>
                     <div className="p-col-12">
-                        <Checkbox className="leftStick" inputId="cb2" value="Agua" onChange={this.onServiceChange} checked={this.state.housingServices.includes('Agua')}></Checkbox>
+                        <Checkbox className="leftStick" inputId="cb2" value="Agua" onChange={this.onServiceChange} checked={this.state.Services.includes('Agua')}></Checkbox>
                         <label htmlFor="cb2" className="p-radiobutton-label">Agua</label>
                     </div>
                     <div className="p-col-12">
-                        <Checkbox className="leftStick" inputId="cb3" value="Internet" onChange={this.onServiceChange} checked={this.state.housingServices.includes('Internet')}></Checkbox>
+                        <Checkbox className="leftStick" inputId="cb3" value="Internet" onChange={this.onServiceChange} checked={this.state.Services.includes('Internet')}></Checkbox>
                         <label htmlFor="cb3" className="p-radiobutton-label">Internet</label>
                     </div>
                     <div className="p-col-12">
-                        <Checkbox className="leftStick" inputId="cb4" value="TV" onChange={this.onServiceChange} checked={this.state.housingServices.includes('TV')}></Checkbox>
+                        <Checkbox className="leftStick" inputId="cb4" value="TV" onChange={this.onServiceChange} checked={this.state.Services.includes('TV')}></Checkbox>
                         <label htmlFor="cb4" className="p-radiobutton-label">TV de paga</label>
                     </div>
                 </Box>
@@ -970,12 +1066,12 @@ class Stepper extends React.Component {
                         <Button
                             label="Enviar Solicitud"
                             className="nav2BtnF"
-                            onClick={(e) => this.setState({ step: this.state.step + 1 })}
+                            onClick={() => this.Register()}
                         />
                 </Box>
             </Box>
 
-          </Grid>
+        </Grid>
         );
     }
     step4 = () => {
@@ -1009,7 +1105,7 @@ class Stepper extends React.Component {
               </Box >
               <br />
               <Box >
-                <div>Folio:  </div>
+                <div>Folio: 121212039 </div>
               </Box>
               <br/>
               <br/>
@@ -1086,7 +1182,7 @@ class Stepper extends React.Component {
                             alignContent="center"
                         >
                             <Box direction="column" alignSelf="end" height="60%">
-                                {this.state.step > 0 && this.state.step!==4?
+                                {this.state.step > 0 && this.state.step<4 ?
                                     <Button
                                         label="Anterior"
                                         className="navBtnB"

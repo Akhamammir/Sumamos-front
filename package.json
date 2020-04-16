@@ -7,6 +7,7 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "antd": "^4.1.2",
+    "axios": "^0.19.2",
     "grommet": "^2.12.0",
     "grommet-icons": "^4.4.0",
     "primeicons": "^2.0.0",
@@ -24,6 +25,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "proxy": "http://34.94.115.43:30001",
   "eslintConfig": {
     "extends": "react-app"
   },
