@@ -969,7 +969,8 @@ class Stepper extends React.Component {
                 <Box direction="column" alignSelf="end" height="60%">
                         <Button
                             label="Enviar Solicitud"
-                            className="nav2BtnB"
+                            className="nav2BtnF"
+                            onClick={(e) => this.setState({ step: this.state.step + 1 })}
                         />
                 </Box>
             </Box>
@@ -979,7 +980,51 @@ class Stepper extends React.Component {
     }
     step4 = () => {
         return (
-            <div>Step 5</div>
+          <Grid
+          rows={['100%']}
+          columns={['80%', 'xsmall']}
+          gap={{ column: "small", row: "medium" }}
+          areas={[
+            { name: 'one', start: [0, 0], end: [0, 0] },
+            { name: 'two', start: [1, 0], end: [1, 0] },
+          ]}
+          >
+
+            <Box direction="column"
+                gridArea="two"
+                alignContent="center"
+            >
+                <Box direction="column" alignSelf="end" height="60%">
+                        <Button
+                            label="Ver mas apoyos"
+                            className="nav2BtnF"
+
+                        />
+                </Box>
+            </Box>
+
+            <Box greidArea="one">
+              <Box className="label0">
+                <div>TU SOLICITUD HA SIDO ENVIADA</div>
+              </Box >
+              <br />
+              <Box >
+                <div>Folio:  </div>
+              </Box>
+              <br/>
+              <br/>
+              <Box className="label2">
+                <div>La entrega de tu apollo esta siendo procesada. UN cordinador
+                del programade pondrá en contacto contigo muy pronto. Guarda
+                tu numero de folio</div>
+              </Box>
+              <br/>
+              <Box className="label1">
+                <div>¡RECUERDA QUE EL APOYO LLEGARÁ HASTA LA PUERTRA DE TU SALUD ES NUESTA PRIORIDAD!</div>
+              </Box>
+            </Box>
+
+          </Grid>
         );
     }
     render() {
@@ -1041,7 +1086,7 @@ class Stepper extends React.Component {
                             alignContent="center"
                         >
                             <Box direction="column" alignSelf="end" height="60%">
-                                {this.state.step > 0 ?
+                                {this.state.step > 0 && this.state.step!==4?
                                     <Button
                                         label="Anterior"
                                         className="navBtnB"
@@ -1073,16 +1118,17 @@ class Stepper extends React.Component {
                             gridArea="navf"
                             alignContent="center"
                         >
-                            <Box direction="column" alignSelf="end" height="60%">
-                                {this.state.step === 3 ?
-                                    <span></span> :
-                                    <Button
-                                        label="Siguiente"
-                                        className="navBtnF"
-                                        onClick={(e) => this.setState({ step: this.state.step + 1 })}
-                                    />
-                                }
-                            </Box>
+                          <Box direction="column" alignSelf="end" height="60%">
+                              {this.state.step < 4  && this.state.step !== 3  ?
+                                  <Button
+                                      label="Siguiente"
+                                      className="navBtnF"
+                                      onClick={(e) => this.setState({ step: this.state.step + 1 })}
+                                  />
+                                  :
+                                  <span></span>
+                              }
+                          </Box>
                         </Box>
                     </Grid>
                 </header>
