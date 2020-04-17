@@ -15,6 +15,7 @@ import { FileUpload } from 'primereact/fileupload';
 import { Card } from 'primereact/card';
 import { Grommet, Grid, Box, Heading, Text } from 'grommet';
 import { email } from './../Models/Regex'
+import {Growl} from 'primereact/growl';
 import { ipsumShort } from './../Models/Lorem'
 import axios from 'axios';
 import './stepper.css';
@@ -88,11 +89,21 @@ class Stepper extends React.Component {
                     email: true,cp: true,
                     phone: true,
                     },
-                step1 :{},
-                step2 :{}
+                step1 :{
+                    maritalStatus:true,ocupation:true,
+                    familyMebers:true,currentSituacion:true,
+                    housingStatus:true,housingMaterial:true,
+                    housingRooms:true,
+                },
+                step2 :{
+                    selectplan:true
+                }
             },
             frwDisable:true
         }
+        this.showInfo = this.showInfo.bind(this);
+        this.showError = this.showError.bind(this);
+
         this.onServiceChange= this.onServiceChange.bind(this)
         this.validate= this.validate.bind(this)
     }
@@ -101,13 +112,32 @@ class Stepper extends React.Component {
     validate = (ev) => {
         let temp = { ...ev };
         this.setState({ email: ev.target.value }, function () {
-            console.log(this.state);
+            // console.log(this.state);
             if (email.test(this.state.email)) {
                 this.op.hide();
-                this.setState({ validMail: true });
+                // this.setState({ validMail: true});
+                this.setState(state =>({
+                    noValid:{
+                        ...state.noValid,
+                        step0 : {
+                            ...state.noValid.step0,
+                            email:false
+                        }
+                    }
+                }))
+
             } else {
                 this.op.show(temp)
-                this.setState({ validMail: false });
+                this.setState(state =>({
+                    noValid:{
+                        ...state.noValid,
+                        step0 : {
+                            ...state.noValid.step0,
+                            email:true
+                        }
+                    }
+                }))
+                // this.setState({ validMail: false });
             }
         });
     }
@@ -134,6 +164,20 @@ class Stepper extends React.Component {
         }))
     }
 
+    validateFwr=()=> {
+        const step = `step${this.state.step}`
+        const data= this.state.noValid[step]
+        // const arr=(Object.values(data));
+        // console.log(data)
+        // console.log(arr)
+        const error = (Object.values(data)).find(el => el === true);
+        if(error){
+            this.showInfo();
+            return null
+        }
+        this.setState({ step: this.state.step + 1 })
+    }
+
     onServiceChange(e) {
         let selectedServices = [...this.state.Services];
         if(e.checked)
@@ -147,11 +191,17 @@ class Stepper extends React.Component {
         }
             );
     }
+    showInfo() {
+        this.growl.show({severity: 'info', summary: 'Información', detail: 'Todos los campos son obligatiroios'});
+    }
+    showError() {
+        this.growl.show({severity: 'error', summary: 'Error', detail: 'Se ha producido un error'});
+    }
     Register = () => {
         axios.post('http://34.94.115.43:30001/users', { state: this.state }).then((res) => {
             console.log(res);
             const { status } = res;
-            if (status !== 200) alert('Error.', 5000);
+            if (status !== 200) this.showError();
             if(status === 200) {
                 this.setState({step:4})
             }
@@ -356,8 +406,9 @@ class Stepper extends React.Component {
                     <Calendar
                         value={this.state.date}
                         onChange={(e) => {
-                                this.setState({ date: e.value })
-                                this.validateIputs("date",e.value.toString(),1)
+                            let value = e.value
+                                this.setState({ date: value })
+                                this.validateIputs("date",value?value.toString():null,1)
                             }
                         }
                     ></Calendar>
@@ -428,14 +479,14 @@ class Stepper extends React.Component {
                         <Button
                             id='mailButton'
                             icon={
-                                this.state.validMail ?
-                                    "pi pi-check" :
-                                    "pi pi-times"
+                                this.state.noValid.step0.email ?
+                                "pi pi-times":
+                                "pi pi-check" 
                             }
                             className={
-                                this.state.validMail ?
-                                    "p-button-secondary-mail-appr" :
-                                    "p-button-secondary-mail"
+                                this.state.noValid.step0.email ?
+                                "p-button-secondary-mail":
+                                "p-button-secondary-mail-appr"
 
                             }
                             disabled="disabled"
@@ -501,7 +552,11 @@ class Stepper extends React.Component {
                         required
                         value={this.state.maritalStatus}
                         options={maritalStatusSelectItems}
-                        onChange={(e) => { this.setState({ maritalStatus: e.value }) }}
+                        onChange={(e) => { 
+                            this.setState({ maritalStatus: e.value }) 
+                            this.validateIputs("maritalStatus",e.value,1) 
+
+                        }}
                         placeholder="Desplegar lista."
                     />
                 </Box>
@@ -514,9 +569,11 @@ class Stepper extends React.Component {
                             style={{ width: '100%' }}
                             value={this.state.ocupation}
                             onChange={
-                                (e) => this.setState({
-                                    ocupation: e.target.value
-                                })
+                                (e) => {
+                                    this.setState({ocupation: e.target.value})
+                                    this.validateIputs("ocupation",e.target.value,6) 
+
+                                }
                             }
                         />
                         <Button
@@ -540,9 +597,11 @@ class Stepper extends React.Component {
                             keyfilter="pint"
                             value={this.state.familyMebers}
                             onChange={
-                                (e) => this.setState({
-                                    familyMebers: e.target.value
-                                })
+                                (e) => {
+                                    this.setState({familyMebers: e.target.value})
+                                    this.validateIputs("familyMebers",e.target.value,1) 
+
+                                }
                             }
                         />
                         <Button
@@ -561,7 +620,11 @@ class Stepper extends React.Component {
                     <Dropdown
                         value={this.state.currentSituacion}
                         options={currentSituacionSelectItems}
-                        onChange={(e) => { this.setState({ currentSituacion: e.value }) }}
+                        onChange={(e) => { 
+                            this.setState({ currentSituacion: e.value }) 
+                            this.validateIputs("currentSituacion",e.value,1) 
+
+                        }}
                         placeholder="Desplegar lista."
                     />
                 </Box>
@@ -575,9 +638,10 @@ class Stepper extends React.Component {
                             name="housingStatus"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingStatus: e.value
-                                })
+                                (e) => {
+                                    this.setState({housingStatus: e.value})
+                                    this.validateIputs("housingStatus",e.value,1) 
+                                }
                             }
                             checked={
                                 this.state.housingStatus === 'hStatus-1'
@@ -597,9 +661,10 @@ class Stepper extends React.Component {
                             name="housingStatus"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingStatus: e.value
-                                })
+                                (e) => {
+                                    this.setState({housingStatus: e.value})
+                                    this.validateIputs("housingStatus",e.value,1) 
+                                }
                             }
                             checked={
                                 this.state.housingStatus === 'hStatus-2'
@@ -619,9 +684,10 @@ class Stepper extends React.Component {
                             name="housingStatus"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingStatus: e.value
-                                })
+                                (e) => {
+                                    this.setState({housingStatus: e.value})
+                                    this.validateIputs("housingStatus",e.value,1) 
+                                }
                             }
                             checked={
                                 this.state.housingStatus === 'hStatus-3'
@@ -641,9 +707,10 @@ class Stepper extends React.Component {
                             name="housingStatus"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingStatus: e.value
-                                })
+                                (e) => {
+                                    this.setState({housingStatus: e.value})
+                                    this.validateIputs("housingStatus",e.value,1) 
+                                }
                             }
                             checked={
                                 this.state.housingStatus === 'hStatus-4'
@@ -688,9 +755,10 @@ class Stepper extends React.Component {
                             name="housingMaterial"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingMaterial: e.value
-                                })
+                                (e) => {
+                                    this.setState({housingMaterial: e.value})
+                                this.validateIputs("housingMaterial",e.value,1)
+                                }
                             }
                             checked={
                                 this.state.housingMaterial === 'hMaterial-1'
@@ -710,9 +778,10 @@ class Stepper extends React.Component {
                             name="housingMaterial"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingMaterial: e.value
-                                })
+                                (e) => {
+                                    this.setState({housingMaterial: e.value})
+                                this.validateIputs("housingMaterial",e.value,1)
+                                }
                             }
                             checked={
                                 this.state.housingMaterial === 'hMaterial-2'
@@ -733,9 +802,10 @@ class Stepper extends React.Component {
                             name="housingMaterial"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingMaterial: e.value
-                                })
+                                (e) => {
+                                    this.setState({housingMaterial: e.value})
+                                this.validateIputs("housingMaterial",e.value,1)
+                                }
                             }
                             checked={
                                 this.state.housingMaterial === 'hMaterial-3'
@@ -755,9 +825,10 @@ class Stepper extends React.Component {
                             name="housingMaterial"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingMaterial: e.value
-                                })
+                                (e) => {
+                                    this.setState({housingMaterial: e.value})
+                                this.validateIputs("housingMaterial",e.value,1)
+                                }
                             }
                             checked={
                                 this.state.housingMaterial === 'hMaterial-4'
@@ -802,9 +873,10 @@ class Stepper extends React.Component {
                             name="housingRooms"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingRooms: e.value
-                                })
+                                (e) =>{
+                                    this.setState({housingRooms: e.value})
+                                    this.validateIputs("housingRooms",e.value,1)
+                                }
                             }
                             checked={
                                 this.state.housingRooms === 'hrooms-1'
@@ -824,9 +896,10 @@ class Stepper extends React.Component {
                             name="housingRooms"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingRooms: e.value
-                                })
+                                (e) =>{
+                                    this.setState({housingRooms: e.value})
+                                    this.validateIputs("housingRooms",e.value,1)
+                                }
                             }
                             checked={
                                 this.state.housingRooms === 'hrooms-2'
@@ -846,9 +919,10 @@ class Stepper extends React.Component {
                             name="housingRooms"
                             className="leftStick"
                             onChange={
-                                (e) => this.setState({
-                                    housingRooms: e.value
-                                })
+                                (e) =>{
+                                    this.setState({housingRooms: e.value})
+                                    this.validateIputs("housingRooms",e.value,1)
+                                }
                             }
                             checked={
                                 this.state.housingRooms === 'hrooms-3'
@@ -914,10 +988,11 @@ class Stepper extends React.Component {
                                     "selectbtn p-button-raised" :
                                     "unselectbtn p-button-raised"
                             }
-                            onClick={(e) =>
-                                this.setState({
-                                    selectplan: 1
-                                })}
+                            onClick={(e) => {
+                                        this.setState({selectplan: 1})
+                                        this.validateIputs("selectplan","1",1)
+                                        }
+                                    }
                         />
                     </Card>
                 </Box>
@@ -938,10 +1013,11 @@ class Stepper extends React.Component {
                                 "selectbtn p-button-raised" :
                                 "unselectbtn p-button-raised"
                             }
-                            onClick={(e) =>
-                                this.setState({
-                                    selectplan: 2
-                                })}
+                            onClick={(e) =>{
+                                this.setState({selectplan: 2})
+                                this.validateIputs("selectplan","2",1)
+                                }
+                            }
                         />
                     </Card>
                 </Box>
@@ -962,10 +1038,11 @@ class Stepper extends React.Component {
                                 "selectbtn p-button-raised" :
                                 "unselectbtn p-button-raised"
                             }
-                            onClick={(e) =>
-                                this.setState({
-                                    selectplan: 3
-                                })}
+                            onClick={(e) => {
+                                this.setState({selectplan: 3})
+                                this.validateIputs("selectplan","3",1)
+                                }
+                            }
                         />
                     </Card>
                 </Box>
@@ -986,10 +1063,11 @@ class Stepper extends React.Component {
                                     "selectbtn p-button-raised" :
                                     "unselectbtn p-button-raised"
                                 }
-                                onClick={(e) =>
-                                    this.setState({
-                                        selectplan: 4
-                                    })}
+                                onClick={(e) =>{
+                                    this.setState({selectplan: 4})
+                                    this.validateIputs("selectplan","4",1)
+                                    }
+                                }
                             />
                         </Card>
                     </Box>
@@ -1105,7 +1183,7 @@ class Stepper extends React.Component {
               </Box >
               <br />
               <Box >
-                <div>Folio: 121212039 </div>
+                <div>Folio: {Math.floor(Math.random() * (99999 - 1)) + 1} </div>
               </Box>
               <br/>
               <br/>
@@ -1126,6 +1204,7 @@ class Stepper extends React.Component {
     render() {
         return (
             <Grommet className="App" style={{ overflow: 'hidden' }}>
+                <Growl ref={(el) => this.growl = el} />
                 <Sidebar
                     visible={this.state.visible}
                     onHide={(e) => this.setState({ visible: false })}
@@ -1210,21 +1289,22 @@ class Stepper extends React.Component {
                                     )
                             }
                         </Box>
-                        <Box direction="column"
-                            gridArea="navf"
-                            alignContent="center"
+                        <Box gridArea="navf"
+                        direction="column"
+                        alignContent="center"
                         >
-                          <Box direction="column" alignSelf="end" height="60%">
-                              {this.state.step < 4  && this.state.step !== 3  ?
-                                  <Button
-                                      label="Siguiente"
-                                      className="navBtnF"
-                                      onClick={(e) => this.setState({ step: this.state.step + 1 })}
-                                  />
-                                  :
-                                  <span></span>
-                              }
-                          </Box>
+                            <Box direction="column" alignSelf="end" height="60%">
+                                {this.state.step < 4  && this.state.step !== 3  ?
+                                    <Button
+                                        label="Siguiente"
+                                        className="navBtnF"
+                                        // onClick={(e) => this.setState({ step: this.state.step + 1 })}
+                                        onClick={() => this.validateFwr()}
+                                    />
+                                :
+                                    <span></span>
+                                }
+                            </Box>
                         </Box>
                     </Grid>
                 </header>
