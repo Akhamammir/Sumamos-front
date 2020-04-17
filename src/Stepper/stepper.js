@@ -192,7 +192,7 @@ class Stepper extends React.Component {
             );
     }
     showInfo() {
-        this.growl.show({severity: 'info', summary: 'Información', detail: 'Todos los campos son obligatiroios'});
+        this.growl.show({severity: 'info', summary: 'Información', detail: 'Todos los campos son obligatorios'});
     }
     showError() {
         this.growl.show({severity: 'error', summary: 'Error', detail: 'Se ha producido un error'});
