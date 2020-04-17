@@ -47,6 +47,7 @@ export default class Landing extends Component {
               </Heading>
             </Box>
             <Box gridArea='mainTitle' align='end' justify='center'>
+            <br/><br/>
               <Heading
                 textAlign='end'
                 alignSelf='end'
@@ -57,7 +58,7 @@ export default class Landing extends Component {
                   horizontal: 'medium',
                 }}
               >
-                {this.title}
+                Apoyos por contingencia covid-19
               </Heading>
               <Heading
                 textAlign='end'
@@ -67,7 +68,8 @@ export default class Landing extends Component {
                   horizontal: 'medium',
                 }}
               >
-                {this.title}
+              No es necesario exponerse, solicita, verifica <br/>y recibe tu apoyo hasta la puerta de tu casa
+
               </Heading>
             </Box>
             <Box gridArea='getStarted'>
@@ -101,21 +103,7 @@ export default class Landing extends Component {
               <Hero />
             </Box>
             <Footer />
-            <Box gridArea='navf' direction='column' alignContent='center'>
-              <Box direction='column' alignSelf='end' height='60%'>
-                {this.state.step === 3 ? (
-                  <span></span>
-                ) : (
-                  <Button
-                    label='Siguiente'
-                    className='navBtnF'
-                    onClick={(e) =>
-                      this.setState({ step: this.state.step + 1 })
-                    }
-                  />
-                )}
-              </Box>
-            </Box>
+
           </Grid>
         </header>
       </Grommet>
@@ -133,6 +121,7 @@ const Hero = () => {
       responsive
     >
       <Box responsive align='end' justify='center' gridArea='content'>
+      <br/><br/><br/><br/><br/><br/><br/><br/><br/>
         <Heading
           className='unselect'
           textAlign='end'
@@ -142,9 +131,9 @@ const Hero = () => {
             horizontal: 'medium',
           }}
         >
-          Hero Header
+          Maximiza el alcance de tu cooperación.
         </Heading>
-
+        <br/>
         <Heading
           textAlign='start'
           alignSelf='start'
@@ -155,7 +144,13 @@ const Hero = () => {
             horizontal: 'medium',
           }}
         >
-          Subtitle
+        <Text size='small'>
+        La herramienta ideal para gestionar la logística de tus campañas de apoyos sociales.<br/><br/>
+        Recibe, gestiona y distribuye tus apoyos sociales económicos o en especie con la metodología de sumamos.<br/><br/>
+        Eficienta la operación y maximiza tus recursos humanos.<br/><br/>
+        Ahorra recursos técnicos y agiliza los procesos internos.<br/><br/>
+        Toma mejores decisiones.
+        </Text>
         </Heading>
       </Box>
     </Grid>
@@ -196,8 +191,10 @@ const MainContent = () => {
         ]}
       >
         <Box gridArea='one'>
-          <Card title='Title' className={'unselect'}>
-            {ipsumShort}
+          <Card title='Apoyo a micro y pequeñas empresas' className={'unselect'}>
+            Brindar apoyo económico a los trabajadores cuyos ingresos se
+            han visto afectados debido a la contingencia.
+            <br/><br/><br/>
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
@@ -205,8 +202,9 @@ const MainContent = () => {
           </Card>
         </Box>
         <Box gridArea='two'>
-          <Card title='Title' className={'unselect'}>
-            {ipsumShort}
+          <Card title='Apoyo a productores de maíz' className={'unselect'}>
+            Los y las productoras que se dedican a la producción de maíz que
+             han sido afectados por la actual pandemia de COVID-19 tienen el apoyo del Gobierno del Estado.
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
@@ -214,8 +212,9 @@ const MainContent = () => {
           </Card>
         </Box>
         <Box gridArea='three'>
-          <Card title='Title' className={'unselect'}>
-            {ipsumShort}
+          <Card title='Apoyo a personas con autoempleo o empleos no formales' className={'unselect'}>
+            Brindar apoyo económico a los trabajadores cuyos ingresos se han visto afectados debido a la contingencia.
+            <br/><br/>
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
@@ -223,8 +222,11 @@ const MainContent = () => {
           </Card>
         </Box>
         <Box gridArea='four'>
-          <Card title='Title' className={'unselect'}>
-            {ipsumShort}
+          <Card title='Apoyo a mujeres' className={'unselect'}>
+            Las trabajadoras del hogar representan un sector económico
+            vulnerable por lo cual también se otorgará un apoyo para amas de
+             casa afectadas por la contingencia de COVID-19.
+             <br/><br/>
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
@@ -232,8 +234,13 @@ const MainContent = () => {
           </Card>
         </Box>
         <Box gridArea='five'>
-          <Card title='Title' className={'select'}>
-            {ipsumShort}
+          <Card title='Intuitiva herramienta de levantamiento de datos' className={'select'}>
+          <Text size='small'>
+          - Utiliza una potente herramienta de registro para generar tu base de datos.
+          <br/>
+          - Agiliza el proceso de levantamiento de datos y ahorra tiempo capturando y vaciando datos a mano
+          </Text>
+          <br/>
             <Button
               label='Seleccionar'
               className={'selectbtn p-button-raised'}
@@ -241,8 +248,14 @@ const MainContent = () => {
           </Card>
         </Box>
         <Box gridArea='six'>
-          <Card title='Title' className={'select'}>
-            {ipsumShort}
+          <Card title='Poderosa herramienta de gestión de solicitudes' className={'select'}>
+          <Text size='small'>
+          Con nuestro poderoso backend podrás filtrar las solicitudes para poder:<br/>
+          - Eficientar la operación y distribución de tus apoyos<br/>
+          - Crear un seguimiento desde la solicitud hasta la entrega<br/>
+          - Medir la efectividad y el tiempo de respuesta
+          </Text>
+          <br/>
             <Button
               label='Seleccionar'
               className={'selectbtn p-button-raised'}
@@ -275,52 +288,42 @@ const Footer = () => {
     >
       <Box gridArea='title-1' justify='end'>
         <Text weight='bold' size='medium'>
-          CONTACT US
-        </Text>
+          CONTACTANOS
+          </Text>
       </Box>
       <Box gridArea='title-2' justify='end'>
         <Text weight='bold' size='medium'>
-          CUSTOMER SERVICE
+          SERVISIO AL CLIENTE
         </Text>
       </Box>
       <Box gridArea='title-3' justify='end'>
         <Text weight='bold' size='medium'>
-          INFORMATION
+          INFORMACIÓN
         </Text>
       </Box>
       <Box gridArea='title-4' justify='end'>
         <Text weight='bold' size='medium'>
-          SUBSCRIBE TO SUMEMOS BY EMAIL
+          SUBSCRIBETE A SUMEMOS VIA EMAIL
         </Text>
       </Box>
       <Box gridArea='content-1'>
-        <Text size='small'>+44 345 678 903adobexd@mail.comFind a Store</Text>
-        <Text size='small'>+44 345 678 903adobexd@mail.comFind a Store</Text>
+        <Text size='small'>hola@paseusted.com.mx</Text>
+        <Text size='small'>soporte@paseusted.com.mx</Text>
       </Box>
       <Box gridArea='content-2'>
         <Text size='xsmall'>
-          Contact UsOrdering & PaymentShippingReturnsFAQ
-        </Text>
-        <Text size='xsmall'>
-          Contact UsOrdering & PaymentShippingReturnsFAQ
+          SUMEMOS cuenta con un equipo de atención a clientes listo
+          para resolver las respuestas que necesitas en tiempo y forma.
         </Text>
       </Box>
       <Box gridArea='content-3'>
         <Text size='xsmall'>
-          About Work With USPrivacy PolicyTerms & ConditionsPress Enquiries
-        </Text>
-        <Text size='xsmall'>
-          About Work With USPrivacy PolicyTerms & ConditionsPress Enquiries
+          Política de privacidad
         </Text>
       </Box>
       <Box gridArea='content-4'>
         <Text size='xsmall'>
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          quiofficia
-        </Text>
-        <Text size='xsmall'>
-          Excepteur sint occaecat cupidatat non proident, sunt in culpa
-          quiofficia
+          Recibe las últimas noticias acerca de la plataforma SUMEMOS
         </Text>
       </Box>
       <Box
