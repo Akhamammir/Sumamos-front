@@ -7,9 +7,20 @@ import { Button } from 'primereact/button';
 import './Landing.css';
 
 export default class Landing extends Component {
-  state = {
-    visible: false,
-  };
+  constructor(props) {
+    super(props);
+      this.state = {
+        visible: false,
+      }
+    }
+
+    componentDidMount() {
+
+  }
+
+  handleClick=()=>{
+    this.props.history.push(`/registro`)
+  }
   title = 'Excepteur sint oeeaeeat cupidatat non proider';
   render() {
     return (
@@ -73,7 +84,7 @@ export default class Landing extends Component {
               </Heading>
             </Box>
             <Box gridArea='getStarted'>
-              <GetStarted />
+              <GetStarted  handleClick={this.handleClick}/>
             </Box>
             <Box gridArea='navb' alignContent='center'>
               <Box direction='column' alignSelf='end' height='60%'>
@@ -91,7 +102,7 @@ export default class Landing extends Component {
               </Box>
             </Box>
             <Box gridArea='main'>
-              <MainContent />
+              <MainContent handleClick={this.handleClick} />
             </Box>
             <Box
               gridArea='Hero'
@@ -156,7 +167,7 @@ const Hero = () => {
     </Grid>
   );
 };
-const GetStarted = () => {
+const GetStarted = ({handleClick}) => {
   return (
     <Grid
       rows={['medium']}
@@ -166,12 +177,15 @@ const GetStarted = () => {
       responsive
     >
       <Box responsive align='end' justify='center' gridArea='content'>
-        <GButton label='Comenzar' />
+        <GButton 
+        label='Comenzar' 
+        onClick={handleClick}
+        />
       </Box>
     </Grid>
   );
 };
-const MainContent = () => {
+const MainContent = ({handleClick}) => {
   return (
     <>
       <Heading alignSelf='center' level='2' margin='none'>
@@ -198,6 +212,7 @@ const MainContent = () => {
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
+              onClick={handleClick}
             />
           </Card>
         </Box>
@@ -208,6 +223,7 @@ const MainContent = () => {
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
+              onClick={handleClick}
             />
           </Card>
         </Box>
@@ -218,6 +234,7 @@ const MainContent = () => {
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
+              onClick={handleClick}
             />
           </Card>
         </Box>
@@ -230,6 +247,8 @@ const MainContent = () => {
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
+              onClick={handleClick}
+
             />
           </Card>
         </Box>
@@ -241,10 +260,11 @@ const MainContent = () => {
           - Agiliza el proceso de levantamiento de datos y ahorra tiempo capturando y vaciando datos a mano
           </Text>
           <br/>
-            <Button
+            {/* <Button
               label='Seleccionar'
               className={'selectbtn p-button-raised'}
-            />
+              onClick={handleClick}
+            /> */}
           </Card>
         </Box>
         <Box gridArea='six'>
@@ -256,10 +276,12 @@ const MainContent = () => {
           - Medir la efectividad y el tiempo de respuesta
           </Text>
           <br/>
-            <Button
+            {/* <Button
               label='Seleccionar'
               className={'selectbtn p-button-raised'}
-            />
+              onClick={handleClick}
+
+            /> */}
           </Card>
         </Box>
       </Grid>
