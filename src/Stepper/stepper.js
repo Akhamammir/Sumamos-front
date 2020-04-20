@@ -1172,7 +1172,10 @@ class Stepper extends React.Component {
                         <Button
                             label="Ver mas apoyos"
                             className="nav2BtnF"
-
+                            onClick={() => {
+                                this.props.history.push(`/`)
+                                }
+                            }
                         />
                 </Box>
             </Box>
