@@ -33,13 +33,14 @@ export default class Landing extends Component {
         </Sidebar>
         <header className='App-header'>
           <Grid
-            rows={['xxsmall', 'small', 'medium', 'large', 'medium', '250px']}
-            columns={['10%', '3%', '1rf', '3%', '10%']}
+            rows={['xxsmall', 'xxsmall', 'medium', 'large', 'medium', '250px']}
+            columns={['10%','3%',"1rf",'3%','10%']}
             gap='small'
             areas={[
               { name: 'header', start: [0, 0], end: [4, 0] },
-              { name: 'mainTitle', start: [0, 1], end: [4, 1] },
-              { name: 'getStarted', start: [2, 2], end: [2, 2] },
+              // { name: 'mainTitle', start: [0, 1], end: [4, 1] },
+              { name: 'Title', start: [2, 1], end: [2, 2] },
+              // { name: 'getStarted', start: [2, 2], end: [2, 2] },
               { name: 'navb', start: [0, 3], end: [0, 3] },
               { name: 'main', start: [2, 3], end: [2, 3] },
               { name: 'navf', start: [4, 2], end: [4, 2] },
@@ -57,35 +58,6 @@ export default class Landing extends Component {
                 Sumamos
               </Heading>
             </Box>
-            <Box gridArea='mainTitle' align='end' justify='center'>
-            <br/><br/>
-              <Heading
-                textAlign='end'
-                alignSelf='end'
-                responsive
-                color='white'
-                level='4'
-                margin={{
-                  horizontal: 'medium',
-                }}
-              >
-                Apoyos por contingencia covid-19
-              </Heading>
-              <Heading
-                textAlign='end'
-                alignSelf='end'
-                responsive
-                margin={{
-                  horizontal: 'medium',
-                }}
-              >
-              No es necesario exponerse, solicita, verifica <br/>y recibe tu apoyo hasta la puerta de tu casa
-
-              </Heading>
-            </Box>
-            <Box gridArea='getStarted'>
-              <GetStarted  handleClick={this.handleClick}/>
-            </Box>
             <Box gridArea='navb' alignContent='center'>
               <Box direction='column' alignSelf='end' height='60%'>
                 {this.state.step > 0 ? (
@@ -101,11 +73,11 @@ export default class Landing extends Component {
                 )}
               </Box>
             </Box>
+            <TitleContent />
             <Box gridArea='main'>
               <MainContent handleClick={this.handleClick} />
             </Box>
-            <Box
-              gridArea='Hero'
+            <Box gridArea='Hero'
               margin='none'
               className='unselect'
               align='start'
@@ -167,24 +139,46 @@ const Hero = () => {
     </Grid>
   );
 };
-const GetStarted = ({handleClick}) => {
-  return (
-    <Grid
-      rows={['medium']}
-      columns={['1fr']}
-      gap='small'
-      areas={[{ name: 'content', start: [0, 0], end: [0, 0] }]}
-      responsive
-    >
-      <Box responsive align='end' justify='center' gridArea='content'>
-        <GButton 
-        label='Comenzar' 
-        onClick={handleClick}
-        />
-      </Box>
-    </Grid>
-  );
-};
+const TitleContent = () => (
+  <Grid gridArea="Title"
+        rows={['xxsmall', 'auto']}
+        columns={['50%', '50%',]}
+        gap={{ column: 'small', row: 'small' }}
+        areas={[
+          { name: 'logo', start: [0,1], end: [0, 1] },
+          { name: 'title', start: [1, 1], end: [1, 1] },
+          { name: 'subtitle', start: [1,0], end: [1, 0] },
+        ]}
+      >
+        <Box gridArea="logo"
+          justify='center'
+          background="status-warning"
+        >
+          .
+        </Box>
+        <Box 
+          gridArea="title"
+          justify='center'
+          align='end'
+        >
+          <Heading
+            color='white'
+            level='4'
+            textAlign="end"
+            >
+            Apoyos por contingencia covid-19
+          </Heading>
+          <Heading
+            textAlign="end"
+            level='2'
+          >
+            No es necesario exponerse, solicita, verifica y recibe tu apoyo hasta la puerta de tu casa
+          </Heading>
+        </Box>
+
+      </Grid>
+
+)
 const MainContent = ({handleClick}) => {
   return (
     <>
@@ -288,6 +282,7 @@ const MainContent = ({handleClick}) => {
     </>
   );
 };
+
 const Footer = () => {
   return (
     <Grid
