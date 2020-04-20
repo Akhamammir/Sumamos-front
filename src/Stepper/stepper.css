@@ -313,11 +313,12 @@ body{
     background-color: #EDC500!important;
   }
   .label0{
-    font-size: xx-large!important;
-  }
-  .label2{
-    font-size: small!important;
+    font-size: 35px!important;
   }
   .label1{
-    color: #EBD426;
+    font-size: 35px!important;
+  }
+  .label2{
+    font-size: 35px!important;
+    color: #EBD426!important;
   }
