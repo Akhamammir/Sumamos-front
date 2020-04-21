@@ -150,9 +150,9 @@ class Stepper extends React.Component {
         if(text!==null){
             error = (text !== '' && text.length < limit) || text.trim()==='';
         }else{
-            error = true; 
+            error = true;
         }
-        
+
         this.setState(state =>({
             noValid:{
                 ...state.noValid,
@@ -242,7 +242,7 @@ class Stepper extends React.Component {
                                     this.setState({
                                         name: { ...this.state.name, pName: e.target.value }
                                     })
-                                    this.validateIputs("pName",e.target.value,3) 
+                                    this.validateIputs("pName",e.target.value,3)
                                 }
                             }
                         />
@@ -265,11 +265,11 @@ class Stepper extends React.Component {
                             placeholder="Vote"
                             value={this.state.name.mName}
                             onChange={
-                                (e) => { 
+                                (e) => {
                                     this.setState({
                                         name: { ...this.state.name, mName: e.target.value }
                                     })
-                                    this.validateIputs("mName",e.target.value,3) 
+                                    this.validateIputs("mName",e.target.value,3)
 
                                 }
                             }
@@ -297,7 +297,7 @@ class Stepper extends React.Component {
                                     this.setState({
                                         street: e.target.value
                                     })
-                                    this.validateIputs("street",e.target.value,7) 
+                                    this.validateIputs("street",e.target.value,7)
                                 }
                             }
                         />
@@ -323,7 +323,7 @@ class Stepper extends React.Component {
                                 (e) => {this.setState({
                                     number: e.target.value
                                     })
-                                    this.validateIputs("number",e.target.value,1) 
+                                    this.validateIputs("number",e.target.value,1)
                                 }
                             }
                         />
@@ -350,7 +350,7 @@ class Stepper extends React.Component {
                                 (e) => {this.setState({
                                     name: { ...this.state.name, fNames: e.target.value }
                                 })
-                                this.validateIputs("fNames",e.target.value,3) 
+                                this.validateIputs("fNames",e.target.value,3)
                                 }
                             }
                         />
@@ -370,9 +370,9 @@ class Stepper extends React.Component {
                     <Dropdown
                         value={this.state.city}
                         options={citySelectItems}
-                        onChange={(e) => { 
+                        onChange={(e) => {
                             this.setState({ city: e.value })
-                            this.validateIputs("city",e.value,1) 
+                            this.validateIputs("city",e.value,1)
 
                         }}
                         placeholder="Selecciona Munic."
@@ -383,7 +383,7 @@ class Stepper extends React.Component {
                     <Dropdown
                         value={this.state.hood}
                         options={citySelectItems}
-                        onChange={(e) => { 
+                        onChange={(e) => {
                             this.setState({ hood: e.value })
                             this.validateIputs("hood",e.value,1)
                         }}
@@ -481,7 +481,7 @@ class Stepper extends React.Component {
                             icon={
                                 this.state.noValid.step0.email ?
                                 "pi pi-times":
-                                "pi pi-check" 
+                                "pi pi-check"
                             }
                             className={
                                 this.state.noValid.step0.email ?
@@ -552,9 +552,9 @@ class Stepper extends React.Component {
                         required
                         value={this.state.maritalStatus}
                         options={maritalStatusSelectItems}
-                        onChange={(e) => { 
-                            this.setState({ maritalStatus: e.value }) 
-                            this.validateIputs("maritalStatus",e.value,1) 
+                        onChange={(e) => {
+                            this.setState({ maritalStatus: e.value })
+                            this.validateIputs("maritalStatus",e.value,1)
 
                         }}
                         placeholder="Desplegar lista."
@@ -571,7 +571,7 @@ class Stepper extends React.Component {
                             onChange={
                                 (e) => {
                                     this.setState({ocupation: e.target.value})
-                                    this.validateIputs("ocupation",e.target.value,6) 
+                                    this.validateIputs("ocupation",e.target.value,6)
 
                                 }
                             }
@@ -599,7 +599,7 @@ class Stepper extends React.Component {
                             onChange={
                                 (e) => {
                                     this.setState({familyMebers: e.target.value})
-                                    this.validateIputs("familyMebers",e.target.value,1) 
+                                    this.validateIputs("familyMebers",e.target.value,1)
 
                                 }
                             }
@@ -620,9 +620,9 @@ class Stepper extends React.Component {
                     <Dropdown
                         value={this.state.currentSituacion}
                         options={currentSituacionSelectItems}
-                        onChange={(e) => { 
-                            this.setState({ currentSituacion: e.value }) 
-                            this.validateIputs("currentSituacion",e.value,1) 
+                        onChange={(e) => {
+                            this.setState({ currentSituacion: e.value })
+                            this.validateIputs("currentSituacion",e.value,1)
 
                         }}
                         placeholder="Desplegar lista."
@@ -640,7 +640,7 @@ class Stepper extends React.Component {
                             onChange={
                                 (e) => {
                                     this.setState({housingStatus: e.value})
-                                    this.validateIputs("housingStatus",e.value,1) 
+                                    this.validateIputs("housingStatus",e.value,1)
                                 }
                             }
                             checked={
@@ -663,7 +663,7 @@ class Stepper extends React.Component {
                             onChange={
                                 (e) => {
                                     this.setState({housingStatus: e.value})
-                                    this.validateIputs("housingStatus",e.value,1) 
+                                    this.validateIputs("housingStatus",e.value,1)
                                 }
                             }
                             checked={
@@ -686,7 +686,7 @@ class Stepper extends React.Component {
                             onChange={
                                 (e) => {
                                     this.setState({housingStatus: e.value})
-                                    this.validateIputs("housingStatus",e.value,1) 
+                                    this.validateIputs("housingStatus",e.value,1)
                                 }
                             }
                             checked={
@@ -709,7 +709,7 @@ class Stepper extends React.Component {
                             onChange={
                                 (e) => {
                                     this.setState({housingStatus: e.value})
-                                    this.validateIputs("housingStatus",e.value,1) 
+                                    this.validateIputs("housingStatus",e.value,1)
                                 }
                             }
                             checked={
@@ -1156,16 +1156,17 @@ class Stepper extends React.Component {
         return (
           <Grid
           rows={['100%']}
-          columns={['80%', 'xsmall']}
-          gap={{ column: "small", row: "medium" }}
+          columns={['10%', '80','10%']}
+          gap={{ column: "medium", row: "medium" }}
           areas={[
-            { name: 'one', start: [0, 0], end: [0, 0] },
-            { name: 'two', start: [1, 0], end: [1, 0] },
+            { name: 'one', start: [0, 0], end: [1, 0] },
+            { name: 'two', start: [1, 0], end: [2, 0] },
+            { name: 'trhee', start: [2, 0], end: [3, 0] },
           ]}
           >
 
             <Box direction="column"
-                gridArea="two"
+                gridArea="trhee"
                 alignContent="center"
             >
                 <Box direction="column" alignSelf="end" height="60%">
@@ -1180,23 +1181,23 @@ class Stepper extends React.Component {
                 </Box>
             </Box>
 
-            <Box greidArea="one">
-              <Box className="label0">
+            <Box greidArea="two">
+              <Box className="label1">
                 <div>TU SOLICITUD HA SIDO ENVIADA</div>
               </Box >
               <br />
-              <Box >
+              <Box className="label1">
                 <div>Folio: {Math.floor(Math.random() * (99999 - 1)) + 1} </div>
               </Box>
               <br/>
               <br/>
-              <Box className="label2">
+              <Box className="label1">
                 <div>La entrega de tu apollo esta siendo procesada. UN cordinador
                 del programade pondrá en contacto contigo muy pronto. Guarda
                 tu numero de folio</div>
               </Box>
-              <br/>
-              <Box className="label1">
+              <br/><br/><br/>
+              <Box className="label2">
                 <div>¡RECUERDA QUE EL APOYO LLEGARÁ HASTA LA PUERTRA DE TU SALUD ES NUESTA PRIORIDAD!</div>
               </Box>
             </Box>
