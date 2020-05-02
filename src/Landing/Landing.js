@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grommet, Grid, Box, Heading, Button as GButton, Text } from 'grommet';
+import { Grommet, Image, Grid, Box, Heading, Text } from 'grommet';
 import { Sidebar } from 'primereact/sidebar';
 import { ipsumShort } from './../Models/Lorem';
 import { Card } from 'primereact/card';
@@ -9,18 +9,16 @@ import './Landing.css';
 export default class Landing extends Component {
   constructor(props) {
     super(props);
-      this.state = {
-        visible: false,
-      }
-    }
-
-    componentDidMount() {
-
+    this.state = {
+      visible: false,
+    };
   }
 
-  handleClick=()=>{
-    this.props.history.push(`/registro`)
-  }
+  componentDidMount() {}
+
+  handleClick = () => {
+    this.props.history.push(`/registro`);
+  };
   title = 'Excepteur sint oeeaeeat cupidatat non proider';
   render() {
     return (
@@ -34,8 +32,8 @@ export default class Landing extends Component {
         <header className='App-header'>
           <Grid
             rows={['xxsmall', 'xxsmall', 'medium', 'large', 'medium', '250px']}
-            columns={['10%','3%',"1rf",'3%','10%']}
-            gap='small'
+            columns={['10%', '3%', '1rf', '3%', '10%']}
+            gap={{ column: 'small', row: 'medium' }}
             areas={[
               { name: 'header', start: [0, 0], end: [4, 0] },
               // { name: 'mainTitle', start: [0, 1], end: [4, 1] },
@@ -77,16 +75,16 @@ export default class Landing extends Component {
             <Box gridArea='main'>
               <MainContent handleClick={this.handleClick} />
             </Box>
-            <Box gridArea='Hero'
-              margin='none'
+            {/* <Box
+              gridArea='Hero'
               className='unselect'
-              align='start'
+              margin={{ vertical: 'medium' }}
+              align='center'
               justify='center'
-            >
-              <Hero />
-            </Box>
+            > */}
+            <Hero />
+            {/* </Box> */}
             <Footer />
-
           </Grid>
         </header>
       </Grommet>
@@ -99,12 +97,13 @@ const Hero = () => {
     <Grid
       rows={['small', 'small']}
       columns={['1fr']}
+      className='unselect'
+      gridArea='Hero'
       gap='small'
-      areas={[{ name: 'content', start: [0, 0], end: [0, 0] }]}
+      areas={[{ name: 'content', start: [0, 0], end: [0, 1] }]}
       responsive
     >
       <Box responsive align='end' justify='center' gridArea='content'>
-      <br/><br/><br/><br/><br/><br/><br/><br/><br/>
         <Heading
           className='unselect'
           textAlign='end'
@@ -116,7 +115,7 @@ const Hero = () => {
         >
           Maximiza el alcance de tu cooperación.
         </Heading>
-        <br/>
+        <br />
         <Heading
           textAlign='start'
           alignSelf='start'
@@ -127,59 +126,70 @@ const Hero = () => {
             horizontal: 'medium',
           }}
         >
-        <Text size='small'>
-        La herramienta ideal para gestionar la logística de tus campañas de apoyos sociales.<br/><br/>
-        Recibe, gestiona y distribuye tus apoyos sociales económicos o en especie con la metodología de sumamos.<br/><br/>
-        Eficienta la operación y maximiza tus recursos humanos.<br/><br/>
-        Ahorra recursos técnicos y agiliza los procesos internos.<br/><br/>
-        Toma mejores decisiones.
-        </Text>
+          <Text size='small'>
+            La herramienta ideal para gestionar la logística de tus campañas de
+            apoyos sociales.
+            <br />
+            <br />
+            Recibe, gestiona y distribuye tus apoyos sociales económicos o en
+            especie con la metodología de sumamos.
+            <br />
+            <br />
+            Eficienta la operación y maximiza tus recursos humanos.
+            <br />
+            <br />
+            Ahorra recursos técnicos y agiliza los procesos internos.
+            <br />
+            <br />
+            Toma mejores decisiones.
+          </Text>
         </Heading>
       </Box>
     </Grid>
   );
 };
 const TitleContent = () => (
-  <Grid gridArea="Title"
-        rows={['xxsmall', 'auto']}
-        columns={['50%', '50%',]}
-        gap={{ column: 'small', row: 'small' }}
-        areas={[
-          { name: 'logo', start: [0,1], end: [0, 1] },
-          { name: 'title', start: [1, 1], end: [1, 1] },
-          { name: 'subtitle', start: [1,0], end: [1, 0] },
-        ]}
+  <Grid
+    gridArea='Title'
+    rows={['xxsmall', 'auto']}
+    columns={['50%', '50%']}
+    gap={{ column: 'small', row: 'small' }}
+    areas={[
+      { name: 'logo', start: [0, 1], end: [0, 1] },
+      { name: 'title', start: [1, 1], end: [1, 1] },
+      { name: 'subtitle', start: [1, 0], end: [1, 0] },
+    ]}
+  >
+    <Box gridArea='logo' justify='center' background='status-warning'>
+      <Image fit='cover' src='/header-logo.jpeg' />
+      {/* <img
+        src='/header-logo.jpeg'
+        alt='header-logo.jpeg'
+        style={{ height: '100%' }}
+      /> */}
+    </Box>
+    <Box
+      gridArea='title'
+      justify='center'
+      align='start'
+      margin={{ horizontal: 'large' }}
+    >
+      <Heading
+        color='white'
+        level='4'
+        textAlign='start'
+        margin={{ horizontal: 'large' }}
       >
-        <Box gridArea="logo"
-          justify='center'
-          background="status-warning"
-        >
-          .
-        </Box>
-        <Box 
-          gridArea="title"
-          justify='center'
-          align='end'
-        >
-          <Heading
-            color='white'
-            level='4'
-            textAlign="end"
-            >
-            Apoyos por contingencia covid-19
-          </Heading>
-          <Heading
-            textAlign="end"
-            level='2'
-          >
-            No es necesario exponerse, solicita, verifica y recibe tu apoyo hasta la puerta de tu casa
-          </Heading>
-        </Box>
-
-      </Grid>
-
-)
-const MainContent = ({handleClick}) => {
+        Apoyos por contingencia covid-19
+      </Heading>
+      <Heading textAlign='start' level='2' margin={{ horizontal: 'large' }}>
+        No es necesario exponerse, solicita, verifica y recibe tu apoyo hasta la
+        puerta de tu casa
+      </Heading>
+    </Box>
+  </Grid>
+);
+const MainContent = ({ handleClick }) => {
   return (
     <>
       <Heading alignSelf='center' level='2' margin='none'>
@@ -199,10 +209,15 @@ const MainContent = ({handleClick}) => {
         ]}
       >
         <Box gridArea='one'>
-          <Card title='Apoyo a micro y pequeñas empresas' className={'unselect'}>
-            Brindar apoyo económico a los trabajadores cuyos ingresos se
-            han visto afectados debido a la contingencia.
-            <br/><br/><br/>
+          <Card
+            title='Apoyo a micro y pequeñas empresas'
+            className={'unselect'}
+          >
+            Brindar apoyo económico a los trabajadores cuyos ingresos se han
+            visto afectados debido a la contingencia.
+            <br />
+            <br />
+            <br />
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
@@ -212,8 +227,9 @@ const MainContent = ({handleClick}) => {
         </Box>
         <Box gridArea='two'>
           <Card title='Apoyo a productores de maíz' className={'unselect'}>
-            Los y las productoras que se dedican a la producción de maíz que
-             han sido afectados por la actual pandemia de COVID-19 tienen el apoyo del Gobierno del Estado.
+            Los y las productoras que se dedican a la producción de maíz que han
+            sido afectados por la actual pandemia de COVID-19 tienen el apoyo
+            del Gobierno del Estado.
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
@@ -222,9 +238,14 @@ const MainContent = ({handleClick}) => {
           </Card>
         </Box>
         <Box gridArea='three'>
-          <Card title='Apoyo a personas con autoempleo o empleos no formales' className={'unselect'}>
-            Brindar apoyo económico a los trabajadores cuyos ingresos se han visto afectados debido a la contingencia.
-            <br/><br/>
+          <Card
+            title='Apoyo a personas con autoempleo o empleos no formales'
+            className={'unselect'}
+          >
+            Brindar apoyo económico a los trabajadores cuyos ingresos se han
+            visto afectados debido a la contingencia.
+            <br />
+            <br />
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
@@ -236,24 +257,28 @@ const MainContent = ({handleClick}) => {
           <Card title='Apoyo a mujeres' className={'unselect'}>
             Las trabajadoras del hogar representan un sector económico
             vulnerable por lo cual también se otorgará un apoyo para amas de
-             casa afectadas por la contingencia de COVID-19.
-             <br/><br/>
+            casa afectadas por la contingencia de COVID-19.
+            <br />
+            <br />
             <Button
               label='Seleccionar'
               className={'unselectbtn p-button-raised'}
               onClick={handleClick}
-
             />
           </Card>
         </Box>
         <Box gridArea='five'>
-          <Card title='Intuitiva herramienta de levantamiento de datos' className={'select'}>
-          <Text size='small'>
-          - Utiliza una potente herramienta de registro para generar tu base de datos.
-          <br/>
-          - Agiliza el proceso de levantamiento de datos y ahorra tiempo capturando y vaciando datos a mano
-          </Text>
-          <br/>
+          <Card
+            title='Intuitiva herramienta de levantamiento de datos'
+            className={'select'}
+          >
+            <Text size='small'>
+              - Utiliza una potente herramienta de registro para generar tu base
+              de datos.
+              <br />- Agiliza el proceso de levantamiento de datos y ahorra
+              tiempo capturando y vaciando datos a mano
+            </Text>
+            <br />
             {/* <Button
               label='Seleccionar'
               className={'selectbtn p-button-raised'}
@@ -262,14 +287,20 @@ const MainContent = ({handleClick}) => {
           </Card>
         </Box>
         <Box gridArea='six'>
-          <Card title='Poderosa herramienta de gestión de solicitudes' className={'select'}>
-          <Text size='small'>
-          Con nuestro poderoso backend podrás filtrar las solicitudes para poder:<br/>
-          - Eficientar la operación y distribución de tus apoyos<br/>
-          - Crear un seguimiento desde la solicitud hasta la entrega<br/>
-          - Medir la efectividad y el tiempo de respuesta
-          </Text>
-          <br/>
+          <Card
+            title='Poderosa herramienta de gestión de solicitudes'
+            className={'select'}
+          >
+            <Text size='small'>
+              Con nuestro poderoso backend podrás filtrar las solicitudes para
+              poder:
+              <br />
+              - Eficientar la operación y distribución de tus apoyos
+              <br />
+              - Crear un seguimiento desde la solicitud hasta la entrega
+              <br />- Medir la efectividad y el tiempo de respuesta
+            </Text>
+            <br />
             {/* <Button
               label='Seleccionar'
               className={'selectbtn p-button-raised'}
@@ -306,11 +337,11 @@ const Footer = () => {
       <Box gridArea='title-1' justify='end'>
         <Text weight='bold' size='medium'>
           CONTACTANOS
-          </Text>
+        </Text>
       </Box>
       <Box gridArea='title-2' justify='end'>
         <Text weight='bold' size='medium'>
-          SERVISIO AL CLIENTE
+          SERVICIO AL CLIENTE
         </Text>
       </Box>
       <Box gridArea='title-3' justify='end'>
@@ -320,7 +351,7 @@ const Footer = () => {
       </Box>
       <Box gridArea='title-4' justify='end'>
         <Text weight='bold' size='medium'>
-          SUBSCRIBETE A SUMEMOS VIA EMAIL
+          SUSCRIBETE A SUMEMOS VIA EMAIL
         </Text>
       </Box>
       <Box gridArea='content-1'>
@@ -329,14 +360,12 @@ const Footer = () => {
       </Box>
       <Box gridArea='content-2'>
         <Text size='xsmall'>
-          SUMEMOS cuenta con un equipo de atención a clientes listo
-          para resolver las respuestas que necesitas en tiempo y forma.
+          SUMEMOS cuenta con un equipo de atención a clientes listo para
+          resolver las respuestas que necesitas en tiempo y forma.
         </Text>
       </Box>
       <Box gridArea='content-3'>
-        <Text size='xsmall'>
-          Política de privacidad
-        </Text>
+        <Text size='xsmall'>Política de privacidad</Text>
       </Box>
       <Box gridArea='content-4'>
         <Text size='xsmall'>
@@ -346,9 +375,9 @@ const Footer = () => {
       <Box
         // align='center'
         gridArea='foo'
-        // as='footer'
+        as='footer'
         direction='row'
-        flex='false'
+        flex={false}
         gap='medium'
         justify='between'
         margin='none'
