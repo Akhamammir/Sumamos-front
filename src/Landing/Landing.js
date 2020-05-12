@@ -72,9 +72,10 @@ export default class Landing extends Component {
               </Box>
             </Box>
             <TitleContent />
-            <Box gridArea='main'>
+            {/* <Box gridArea='main'>
               <MainContent handleClick={this.handleClick} />
-            </Box>
+            </Box> */}
+            <MainContent handleClick={this.handleClick} />
             {/* <Box
               gridArea='Hero'
               className='unselect'
@@ -189,130 +190,210 @@ const TitleContent = () => (
     </Box>
   </Grid>
 );
+
 const MainContent = ({ handleClick }) => {
   return (
-    <>
-      <Heading alignSelf='center' level='2' margin='none'>
-        SELECCIONA EL APOYO QUE CREES QUE PUEDAS NECESITAR
-      </Heading>
+    <Grid
+      gridArea='main'
+      rows={['xsmall', 'auto', 'auto']}
+      columns={['1fr']}
+      gap={{ column: 'small', row: 'small' }}
+      areas={[['title'], ['cards'], ['footer']]}
+    >
+      <Box gridArea='title' direction='row' justify='center'>
+        <Heading level='2' responsive>
+          SELECCIONA EL APOYO QUE CREES QUE PUEDAS NECESITAR
+        </Heading>
+      </Box>
       <Grid
-        rows={['20px', 'auto', 'auto']}
-        columns={['auto', '250px', '250px', '250px', '250px', 'auto']}
-        gap={{ column: 'small', row: 'medium' }}
-        areas={[
-          { name: 'one', start: [1, 1], end: [1, 1] },
-          { name: 'two', start: [2, 1], end: [2, 1] },
-          { name: 'three', start: [3, 1], end: [3, 1] },
-          { name: 'four', start: [4, 1], end: [4, 1] },
-          { name: 'five', start: [1, 2], end: [2, 2] },
-          { name: 'six', start: [3, 2], end: [4, 2] },
-        ]}
+        background='brand'
+        gridArea='cards'
+        margin='medium'
+        justifyContent='center'
+        gap={{ column: 'xlarge', row: 'medium' }}
+        columns={{
+          count: 'fit',
+          size: '300px',
+        }}
+        rows={{
+          count: 'fit',
+          size: '327px',
+        }}
       >
-        <Box gridArea='one'>
-          <Card
-            title='Apoyo a micro y pequeñas empresas'
-            className={'unselect'}
-          >
-            Brindar apoyo económico a los trabajadores cuyos ingresos se han
-            visto afectados debido a la contingencia.
-            <br />
-            <br />
-            <br />
-            <Button
-              label='Seleccionar'
-              className={'unselectbtn p-button-raised'}
-              onClick={handleClick}
-            />
-          </Card>
-        </Box>
-        <Box gridArea='two'>
-          <Card title='Apoyo a productores de maíz' className={'unselect'}>
-            Los y las productoras que se dedican a la producción de maíz que han
-            sido afectados por la actual pandemia de COVID-19 tienen el apoyo
-            del Gobierno del Estado.
-            <Button
-              label='Seleccionar'
-              className={'unselectbtn p-button-raised'}
-              onClick={handleClick}
-            />
-          </Card>
-        </Box>
-        <Box gridArea='three'>
-          <Card
-            title='Apoyo a personas con autoempleo o empleos no formales'
-            className={'unselect'}
-          >
-            Brindar apoyo económico a los trabajadores cuyos ingresos se han
-            visto afectados debido a la contingencia.
-            <br />
-            <br />
-            <Button
-              label='Seleccionar'
-              className={'unselectbtn p-button-raised'}
-              onClick={handleClick}
-            />
-          </Card>
-        </Box>
-        <Box gridArea='four'>
-          <Card title='Apoyo a mujeres' className={'unselect'}>
-            Las trabajadoras del hogar representan un sector económico
-            vulnerable por lo cual también se otorgará un apoyo para amas de
-            casa afectadas por la contingencia de COVID-19.
-            <br />
-            <br />
-            <Button
-              label='Seleccionar'
-              className={'unselectbtn p-button-raised'}
-              onClick={handleClick}
-            />
-          </Card>
-        </Box>
-        <Box gridArea='five'>
-          <Card
-            title='Intuitiva herramienta de levantamiento de datos'
-            className={'select'}
-          >
-            <Text size='small'>
-              - Utiliza una potente herramienta de registro para generar tu base
-              de datos.
-              <br />- Agiliza el proceso de levantamiento de datos y ahorra
-              tiempo capturando y vaciando datos a mano
-            </Text>
-            <br />
-            {/* <Button
-              label='Seleccionar'
-              className={'selectbtn p-button-raised'}
-              onClick={handleClick}
-            /> */}
-          </Card>
-        </Box>
-        <Box gridArea='six'>
-          <Card
-            title='Poderosa herramienta de gestión de solicitudes'
-            className={'select'}
-          >
-            <Text size='small'>
-              Con nuestro poderoso backend podrás filtrar las solicitudes para
-              poder:
-              <br />
-              - Eficientar la operación y distribución de tus apoyos
-              <br />
-              - Crear un seguimiento desde la solicitud hasta la entrega
-              <br />- Medir la efectividad y el tiempo de respuesta
-            </Text>
-            <br />
-            {/* <Button
-              label='Seleccionar'
-              className={'selectbtn p-button-raised'}
-              onClick={handleClick}
-
-            /> */}
-          </Card>
-        </Box>
+        {Apoyos.map((el, i) => (
+          <_Card
+            title={el.title}
+            description={el.description}
+            key={i}
+            handleClick={handleClick}
+          />
+        ))}
       </Grid>
-    </>
+    </Grid>
   );
 };
+
+const _Card = ({ title, description, status = true, handleClick }) => {
+  const footer = (
+    <Button
+      label='Seleccionar'
+      className={'unselectbtn p-button-raised'}
+      onClick={handleClick}
+    />
+  );
+  return (
+    <Card
+      title={title}
+      footer={footer}
+      className={status ? 'unselect' : 'selected'}
+    >
+      {description}
+    </Card>
+  );
+};
+
+const Apoyos = [
+  {
+    title: 'DESPENSA',
+    description:
+      'Apoyo alimentario que contiene canasta básica, se entrega cada 15 días en el domicilio. La vigencia del programa depende de la disponibilidad del abasto',
+  },
+  {
+    title: 'PAÑAL',
+    description:
+      'Entrega de pañal se tienen 4 etapas disponibles ( recién nacido, mediano, grande y adulto) la entrega se hace en el domicilio cada 15 días.',
+  },
+  {
+    title: 'COCINA COMUNITARIA ',
+    description:
+      'Entrega de alimento preparado (desayuno y comida). Favor de traer tu recipiente.',
+  },
+];
+
+// const MainContent = ({ handleClick }) => {
+//   return (
+//     <>
+//       <Heading alignSelf='center' level='2' margin='none'>
+//         SELECCIONA EL APOYO QUE CREES QUE PUEDAS NECESITAR
+//       </Heading>
+//       <Grid
+//         rows={['20px', 'auto', 'auto']}
+//         columns={['auto', '250px', '250px', '250px', '250px', 'auto']}
+//         gap={{ column: 'small', row: 'medium' }}
+//         areas={[
+//           { name: 'one', start: [1, 1], end: [1, 1] },
+//           { name: 'two', start: [2, 1], end: [2, 1] },
+//           { name: 'three', start: [3, 1], end: [3, 1] },
+//           { name: 'four', start: [4, 1], end: [4, 1] },
+//           { name: 'five', start: [1, 2], end: [2, 2] },
+//           { name: 'six', start: [3, 2], end: [4, 2] },
+//         ]}
+//       >
+//         <Box gridArea='one'>
+//           <Card
+//             title='Apoyo a micro y pequeñas empresas'
+//             className={'unselect'}
+//           >
+//             Brindar apoyo económico a los trabajadores cuyos ingresos se han
+//             visto afectados debido a la contingencia.
+//             <br />
+//             <br />
+//             <br />
+//             <Button
+//               label='Seleccionar'
+//               className={'unselectbtn p-button-raised'}
+//               onClick={handleClick}
+//             />
+//           </Card>
+//         </Box>
+//         <Box gridArea='two'>
+//           <Card title='Apoyo a productores de maíz' className={'unselect'}>
+//             Los y las productoras que se dedican a la producción de maíz que han
+//             sido afectados por la actual pandemia de COVID-19 tienen el apoyo
+//             del Gobierno del Estado.
+//             <Button
+//               label='Seleccionar'
+//               className={'unselectbtn p-button-raised'}
+//               onClick={handleClick}
+//             />
+//           </Card>
+//         </Box>
+//         <Box gridArea='three'>
+//           <Card
+//             title='Apoyo a personas con autoempleo o empleos no formales'
+//             className={'unselect'}
+//           >
+//             Brindar apoyo económico a los trabajadores cuyos ingresos se han
+//             visto afectados debido a la contingencia.
+//             <br />
+//             <br />
+//             <Button
+//               label='Seleccionar'
+//               className={'unselectbtn p-button-raised'}
+//               onClick={handleClick}
+//             />
+//           </Card>
+//         </Box>
+//         <Box gridArea='four'>
+//           <Card title='Apoyo a mujeres' className={'unselect'}>
+//             Las trabajadoras del hogar representan un sector económico
+//             vulnerable por lo cual también se otorgará un apoyo para amas de
+//             casa afectadas por la contingencia de COVID-19.
+//             <br />
+//             <br />
+//             <Button
+//               label='Seleccionar'
+//               className={'unselectbtn p-button-raised'}
+//               onClick={handleClick}
+//             />
+//           </Card>
+//         </Box>
+//         <Box gridArea='five'>
+//           <Card
+//             title='Intuitiva herramienta de levantamiento de datos'
+//             className={'select'}
+//           >
+//             <Text size='small'>
+//               - Utiliza una potente herramienta de registro para generar tu base
+//               de datos.
+//               <br />- Agiliza el proceso de levantamiento de datos y ahorra
+//               tiempo capturando y vaciando datos a mano
+//             </Text>
+//             <br />
+//             {/* <Button
+//               label='Seleccionar'
+//               className={'selectbtn p-button-raised'}
+//               onClick={handleClick}
+//             /> */}
+//           </Card>
+//         </Box>
+//         <Box gridArea='six'>
+//           <Card
+//             title='Poderosa herramienta de gestión de solicitudes'
+//             className={'select'}
+//           >
+//             <Text size='small'>
+//               Con nuestro poderoso backend podrás filtrar las solicitudes para
+//               poder:
+//               <br />
+//               - Eficientar la operación y distribución de tus apoyos
+//               <br />
+//               - Crear un seguimiento desde la solicitud hasta la entrega
+//               <br />- Medir la efectividad y el tiempo de respuesta
+//             </Text>
+//             <br />
+//             {/* <Button
+//               label='Seleccionar'
+//               className={'selectbtn p-button-raised'}
+//               onClick={handleClick}
+
+//             /> */}
+//           </Card>
+//         </Box>
+//       </Grid>
+//     </>
+//   );
+// };
 
 const Footer = () => {
   return (

@@ -324,3 +324,12 @@ span.p-datepicker-prev-icon {
   font-size: 35px !important;
   color: #ebd426 !important;
 }
+.p-card {
+  display: flex;
+}
+.p-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-around;
+}
