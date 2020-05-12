@@ -37,17 +37,34 @@ const maritalStatusSelectItems = [
   { label: 'Viudo(a)', value: 'widow' },
 ];
 const currentSituacionSelectItems = [
-  { label: 'New York', value: 'NY' },
-  { label: 'Rome', value: 'RM' },
-  { label: 'London', value: 'LDN' },
-  { label: 'Istanbul', value: 'IST' },
-  { label: 'Paris', value: 'PRS' },
+  { label: 'Empleado', value: 'empleado' },
+  { label: 'Desempleado', value: 'desempleado' },
+  { label: 'Independiente', value: 'independiente' },
+  { label: 'Negocio Propio', value: 'propietario' },
 ];
 
 const genders = [
   { label: 'Mujer', value: 'F' },
   { label: 'Hombre', value: 'M' },
 ];
+const _Card = ({ title, description, status = true, handleClick }) => {
+  const footer = (
+    <Button
+      label='Seleccionar'
+      className={'unselectbtn p-button-raised'}
+      onClick={handleClick}
+    />
+  );
+  return (
+    <Card
+      title={title}
+      footer={footer}
+      className={status ? 'unselect' : 'selected'}
+    >
+      {description}
+    </Card>
+  );
+};
 class Stepper extends React.Component {
   //<img src={logo} className="App-logo" alt="logo" />
   constructor(props) {
@@ -123,7 +140,15 @@ class Stepper extends React.Component {
     this.validate = this.validate.bind(this);
     this.cp_ref = React.createRef();
   }
+
   title = 'INGRESA TUS DATOS PERSONALES';
+
+  titles = [
+    'INGRESA TUS DATOS PERSONALES',
+    'INGRESA TUS DATOS SOCIOECONÓMICOS',
+    'SELECCIONA TU APOYO',
+    'DOCUMENTACIÓN',
+  ];
 
   validate = (ev) => {
     let temp = { ...ev };
@@ -938,100 +963,153 @@ class Stepper extends React.Component {
       </Grid>
     );
   };
+
   step2 = () => {
+    const Apoyos = [
+      {
+        title: 'DESPENSA',
+        description:
+          'Apoyo alimentario que contiene canasta básica, se entrega cada 15 días en el domicilio. La vigencia del programa depende de la disponibilidad del abasto',
+      },
+      {
+        title: 'PAÑAL',
+        description:
+          'Entrega de pañal se tienen 4 etapas disponibles ( recién nacido, mediano, grande y adulto) la entrega se hace en el domicilio cada 15 días.',
+      },
+      {
+        title: 'COCINA COMUNITARIA ',
+        description:
+          'Entrega de alimento preparado (desayuno y comida). Favor de traer tu recipiente.',
+      },
+    ];
     return (
       <Grid
-        rows={['70px', '200px', '70px']}
-        columns={['auto', '250px', '250px', '250px', '250px', 'auto']}
-        gap={{ column: 'small', row: 'medium' }}
-        areas={[
-          { name: 'five', start: [4, 1], end: [4, 1] },
-          { name: 'six', start: [1, 1], end: [1, 1] },
-          { name: 'seven', start: [2, 1], end: [2, 1] },
-          { name: 'eight', start: [3, 1], end: [3, 1] },
-        ]}
+        margin='large'
+        rows={['auto']}
+        columns={{
+          count: 'fill',
+          size: '300px',
+        }}
+        gap={{ column: 'medium', row: 'medium' }}
       >
-        <Box gridArea='five'>
-          <Card
-            title='Title'
-            className={this.state.selectplan === 1 ? 'select' : 'unselect'}
-          >
-            {ipsumShort}
-            <Button
-              label='Seleccionar'
+        {Apoyos.map(({ title, description }, index) => (
+          <Box>
+            <Card
+              title={title}
               className={
-                this.state.selectplan === 1
-                  ? 'selectbtn p-button-raised'
-                  : 'unselectbtn p-button-raised'
+                this.state.selectplan === index ? 'select' : 'unselect'
               }
-              onClick={(e) => {
-                this.setState({ selectplan: 1 });
-                this.validateIputs('selectplan', '1', 1);
-              }}
-            />
-          </Card>
-        </Box>
-        <Box gridArea='six'>
-          <Card
-            title='Title'
-            className={this.state.selectplan === 2 ? 'select' : 'unselect'}
-          >
-            {ipsumShort}
-            <Button
-              label='Seleccionar'
-              className={
-                this.state.selectplan === 2
-                  ? 'selectbtn p-button-raised'
-                  : 'unselectbtn p-button-raised'
-              }
-              onClick={(e) => {
-                this.setState({ selectplan: 2 });
-                this.validateIputs('selectplan', '2', 1);
-              }}
-            />
-          </Card>
-        </Box>
-        <Box gridArea='seven'>
-          <Card
-            title='Title'
-            className={this.state.selectplan === 3 ? 'select' : 'unselect'}
-          >
-            {ipsumShort}
-            <Button
-              label='Seleccionar'
-              className={
-                this.state.selectplan === 3
-                  ? 'selectbtn p-button-raised'
-                  : 'unselectbtn p-button-raised'
-              }
-              onClick={(e) => {
-                this.setState({ selectplan: 3 });
-                this.validateIputs('selectplan', '3', 1);
-              }}
-            />
-          </Card>
-        </Box>
-        <Box gridArea='eight'>
-          <Card
-            title='Title'
-            className={this.state.selectplan === 4 ? 'select' : 'unselect'}
-          >
-            {ipsumShort}
-            <Button
-              label='Seleccionar'
-              className={
-                this.state.selectplan === 4
-                  ? 'selectbtn p-button-raised'
-                  : 'unselectbtn p-button-raised'
-              }
-              onClick={(e) => {
-                this.setState({ selectplan: 4 });
-                this.validateIputs('selectplan', '4', 1);
-              }}
-            />
-          </Card>
-        </Box>
+            >
+              {description}
+              <br />
+              <Button
+                label='Seleccionar'
+                className={
+                  this.state.selectplan === index
+                    ? 'selectbtn p-button-raised'
+                    : 'unselectbtn p-button-raised'
+                }
+                onClick={(e) => {
+                  this.setState({ selectplan: index });
+                  this.validateIputs('selectplan', index.toString(), 1);
+                }}
+              />
+            </Card>
+          </Box>
+        ))}
       </Grid>
+      // <Grid
+      //   rows={['70px', '200px', '70px']}
+      //   columns={['auto', '250px', '250px', '250px', '250px', 'auto']}
+      //   gap={{ column: 'small', row: 'medium' }}
+      //   areas={[
+      //     { name: 'five', start: [4, 1], end: [4, 1] },
+      //     { name: 'six', start: [1, 1], end: [1, 1] },
+      //     { name: 'seven', start: [2, 1], end: [2, 1] },
+      //     { name: 'eight', start: [3, 1], end: [3, 1] },
+      //   ]}
+      // >
+      //   <Box gridArea='five'>
+      //     <Card
+      //       title='Title'
+      //       className={this.state.selectplan === 1 ? 'select' : 'unselect'}
+      //     >
+      //       {ipsumShort}
+      //       <Button
+      //         label='Seleccionar'
+      //         className={
+      //           this.state.selectplan === 1
+      //             ? 'selectbtn p-button-raised'
+      //             : 'unselectbtn p-button-raised'
+      //         }
+      //         onClick={(e) => {
+      //           this.setState({ selectplan: 1 });
+      //           this.validateIputs('selectplan', '1', 1);
+      //         }}
+      //       />
+      //     </Card>
+      //   </Box>
+      //   <Box gridArea='six'>
+      //     <Card
+      //       title='Title'
+      //       className={this.state.selectplan === 2 ? 'select' : 'unselect'}
+      //     >
+      //       {ipsumShort}
+      //       <Button
+      //         label='Seleccionar'
+      //         className={
+      //           this.state.selectplan === 2
+      //             ? 'selectbtn p-button-raised'
+      //             : 'unselectbtn p-button-raised'
+      //         }
+      //         onClick={(e) => {
+      //           this.setState({ selectplan: 2 });
+      //           this.validateIputs('selectplan', '2', 1);
+      //         }}
+      //       />
+      //     </Card>
+      //   </Box>
+      //   <Box gridArea='seven'>
+      //     <Card
+      //       title='Title'
+      //       className={this.state.selectplan === 3 ? 'select' : 'unselect'}
+      //     >
+      //       {ipsumShort}
+      //       <Button
+      //         label='Seleccionar'
+      //         className={
+      //           this.state.selectplan === 3
+      //             ? 'selectbtn p-button-raised'
+      //             : 'unselectbtn p-button-raised'
+      //         }
+      //         onClick={(e) => {
+      //           this.setState({ selectplan: 3 });
+      //           this.validateIputs('selectplan', '3', 1);
+      //         }}
+      //       />
+      //     </Card>
+      //   </Box>
+      //   <Box gridArea='eight'>
+      //     <Card
+      //       title='Title'
+      //       className={this.state.selectplan === 4 ? 'select' : 'unselect'}
+      //     >
+      //       {ipsumShort}
+      //       <Button
+      //         label='Seleccionar'
+      //         className={
+      //           this.state.selectplan === 4
+      //             ? 'selectbtn p-button-raised'
+      //             : 'unselectbtn p-button-raised'
+      //         }
+      //         onClick={(e) => {
+      //           this.setState({ selectplan: 4 });
+      //           this.validateIputs('selectplan', '4', 1);
+      //         }}
+      //       />
+      //     </Card>
+      //   </Box>
+      // </Grid>
     );
   };
   step3 = () => {
@@ -1060,9 +1138,15 @@ class Stepper extends React.Component {
           <ProgressBar mode='indeterminate' />
         </Box>
         <Box gridArea='two'>
-          <FileUpload name='demo' url='./upload' mode='basic'></FileUpload>
+          <FileUpload
+            name='demo'
+            url='./upload'
+            mode='basic'
+            chooseLabel='Comprobante Domicilio'
+          ></FileUpload>
         </Box>
-        <Box gridArea='four'>
+
+        {/* <Box gridArea='four'>
           <ProgressBar mode='indeterminate' />
         </Box>
         <Box gridArea='five'>
@@ -1079,7 +1163,8 @@ class Stepper extends React.Component {
         </Box>
         <Box gridArea='eleven'>
           <FileUpload name='demo' url='./upload' mode='basic'></FileUpload>
-        </Box>
+        </Box> */}
+
         <Box direction='column' gridArea='btn' alignContent='center'>
           <Box direction='column' alignSelf='end' height='60%'>
             <Button
@@ -1185,7 +1270,7 @@ class Stepper extends React.Component {
             </Box>
             <Box gridArea='title' alignContent='center'>
               <Heading margin='none' alignSelf='center'>
-                {this.title}
+                {this.titles[this.state.step]}
               </Heading>
             </Box>
             <Box gridArea='navb' alignContent='center'>
